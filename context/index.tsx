@@ -14,7 +14,6 @@ import {
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/ui/header";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Logo = () => {
   return (
@@ -88,11 +87,11 @@ export default function AppProvider(props: { children: ReactNode }) {
           </div>
         </SidebarBody>
       </Sidebar>
-      <ScrollArea className="flex flex-col w-full min-h-screen">
+      <div className="flex flex-col w-full min-h-screen">
         <Header />
 
         {props.children}
-      </ScrollArea>
+      </div>
     </div>
   );
 }
