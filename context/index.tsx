@@ -70,7 +70,7 @@ export default function AppProvider(props: { children: ReactNode }) {
   return (
     <div
       className={cn(
-        "mx-auto h-screen flex w-full max-w-screen flex-1 flex-col overflow-hidden rounded-md border bg-background md:flex-row"
+        "mx-auto h-screen flex w-full max-w-screen flex-1 flex-col overflow-hidden rounded-md border bg-background md:flex-row",
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>

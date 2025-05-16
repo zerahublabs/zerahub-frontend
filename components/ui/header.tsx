@@ -1,7 +1,6 @@
 import React from "react";
 import { Input } from "./input";
 import { Search } from "lucide-react";
-import { Button } from "./button";
 
 export function Header() {
   return (
@@ -12,9 +11,6 @@ export function Header() {
           placeholder="Search datasets..."
           className="border-none focus-visible:ring-0"
         />
-        <Button variant={'outline'} className="font-semibold rounded-sm" size={"sm"}>
-          /
-        </Button>
       </div>
       <appkit-button />
     </div>

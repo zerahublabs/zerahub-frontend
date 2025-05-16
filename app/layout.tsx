@@ -6,17 +6,7 @@ import { headers } from "next/headers";
 import AppProvider from "@/context";
 
 const workSans = Work_Sans({
-  weight: [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900"
-  ],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -34,9 +24,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`${workSans.className} antialiased`}
-      >
+      <body className={`${workSans.className} antialiased`}>
         <WalletContextProvider cookies={cookies}>
           <AppProvider>{children}</AppProvider>
         </WalletContextProvider>
