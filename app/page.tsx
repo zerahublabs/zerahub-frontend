@@ -1,68 +1,108 @@
 "use client";
-
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Avatar } from "@/components/ui/avatar";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import AvatarImage from "boring-avatars";
 import { dataset_samples } from "@/constants/datasets";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { buyer_samples } from "@/constants/buyers";
+import { Receipt } from "lucide-react";
+import Link from "next/link";
+import moment from "moment";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { useEffect } from "react";
+import { DatasetItem } from "@/components/ui/dataset";
 
 export default function Home() {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+    },
+    [Autoplay()]
+  );
+
+  useEffect(() => {
+    emblaApi?.slideNodes();
+  }, [emblaApi]);
+
   return (
-    <div className="flex w-full flex-1 p-4 flex-row gap-4 rounded-tl-2xl border">
+    <div className="flex w-full p-4 flex-row gap-4 rounded-tl-2xl border">
       <div className="flex w-full flex-col gap-6">
-        <div className="w-full">
-          <AspectRatio ratio={16 / 3}>
-            <Image
-              src={"/banner.png"}
-              alt="Gambar"
-              fill
-              className="rounded-md object-cover"
-            />
-          </AspectRatio>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            <div className="flex-shrink-0 flex-grow-0 basis-full">
+              <AspectRatio ratio={16 / 3}>
+                <Image
+                  src={"/banner.png"}
+                  alt="Gambar"
+                  fill
+                  className="rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+            <div className="flex-shrink-0 flex-grow-0 basis-full">
+              <AspectRatio ratio={16 / 3}>
+                <Image
+                  src={"/banner.png"}
+                  alt="Gambar"
+                  fill
+                  className="rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+            <div className="flex-shrink-0 flex-grow-0 basis-full">
+              <AspectRatio ratio={16 / 3}>
+                <Image
+                  src={"/banner.png"}
+                  alt="Gambar"
+                  fill
+                  className="rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+            <div className="flex-shrink-0 flex-grow-0 basis-full">
+              <AspectRatio ratio={16 / 3}>
+                <Image
+                  src={"/banner.png"}
+                  alt="Gambar"
+                  fill
+                  className="rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-4 gap-4 overflow-x-auto">
+        <div className="grid grid-cols-3 gap-4 overflow-x-auto">
           {dataset_samples.map((item, i) => (
-            <Card key={i} className="mb-2 py-0">
-              <div className="overflow-hidden">
-                <AspectRatio ratio={16 / 9}>
-                  <Image
-                    fill
-                    src={`https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80&sig=${item}`}
-                    className="rounded-t-xl transition-all duration-300 hover:scale-110"
-                    alt="Random Dataset Cover"
-                  />
-                </AspectRatio>
-              </div>
-              <CardContent className="flex flex-col gap-4 mb-4">
-                <CardTitle className="text-muted-foreground h-[50px]">
-                  {item.title}
-                </CardTitle>
-                <div className="flex justify-between">
-                  <div className="flex items-center font-semibold text-muted-foreground">
-                    {item.price}
-                  </div>
-                  <Avatar>
-                    <AvatarImage name={`fake-image-${item}`} />
-                  </Avatar>
-                </div>
-              </CardContent>
-            </Card>
+            <DatasetItem key={i} item={item} />
           ))}
         </div>
       </div>
-      <Card className="top-6 right-6 w-80 px-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Buyer</TableHead>
-              <TableHead>Product</TableHead>
-              <TableHead>Price</TableHead>
-            </TableRow>
-          </TableHeader>
-        </Table>
-      </Card>
+      <div className="flex-1 sticky top-4 self-start">
+        <Card className="w-72 px-4 py-4">
+          <Table>
+            <TableBody>
+              {buyer_samples.slice(0, 10).map((buyer, i) => (
+                <TableRow key={i}>
+                  <TableCell>
+                    <div className="p-2 text-muted-foreground border flex items-center justify-center rounded-xl">
+                      <Receipt size={15} />
+                    </div>
+                  </TableCell>
+                  <TableCell className="flex flex-col justify-center items-start">
+                    <Link href={"#"} className="text-primary font-semibold">
+                      {buyer.address.substring(0, 10)}
+                      {"..."}
+                    </Link>
+                    <small>{moment(buyer.timestamp).fromNow()}</small>
+                  </TableCell>
+                  <TableCell>{buyer.dataset.price}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+      </div>
     </div>
   );
 }
