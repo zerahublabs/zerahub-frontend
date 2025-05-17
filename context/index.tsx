@@ -36,7 +36,7 @@ export default function AppProvider(props: { children: ReactNode }) {
     const links = [
         {
             label: 'Discover',
-            href: '#',
+            href: '/',
             icon: <IconBrandTabler className="h-5 w-5 shrink-0 text-card-foreground" />,
         },
         {
