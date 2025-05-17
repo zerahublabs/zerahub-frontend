@@ -1,8 +1,8 @@
 'use client';
-import { SidebarAction } from '@/components/ui/sidebar';
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
-import { WalletIcon } from 'lucide-react';
 import React from 'react';
+import WalletAccount from './wallet-account';
+import { Button } from '@/components/ui/button';
 
 export default function Wallet() {
     const { open } = useAppKit();
@@ -10,19 +10,11 @@ export default function Wallet() {
 
     if (!isConnected) {
         return (
-            <SidebarAction
-                icon={<WalletIcon />}
-                label={'Connect Wallet'}
-                onClick={() => open({ view: 'Connect' })}
-            />
+            <Button variant={'outline'} onClick={() => open({ view: 'Connect' })}>
+                Connect Wallet
+            </Button>
         );
     }
 
-    return (
-        <SidebarAction
-            icon={<WalletIcon />}
-            label={'My Wallet'}
-            onClick={() => open({ view: 'Account' })}
-        />
-    );
+    return <WalletAccount />;
 }
