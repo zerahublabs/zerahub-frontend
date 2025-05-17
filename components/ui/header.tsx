@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from './input';
 import { Search } from 'lucide-react';
+import Wallet from '../block/wallet/wallet';
 
 export function Header() {
     return (
@@ -12,7 +13,7 @@ export function Header() {
                     className="border-none focus-visible:ring-0"
                 />
             </div>
-            <appkit-button />
+            <Wallet />
         </div>
     );
 }
