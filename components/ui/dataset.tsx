@@ -11,7 +11,7 @@ export function DatasetItem(props: { item: DatasetProps }) {
                 <AspectRatio ratio={16 / 9}>
                     <Image
                         fill
-                        src={`https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80&sig=${props.item.title}`}
+                        src={`https://dummyimage.com/600x400/000/fff&text=${props.item.title}`}
                         className="rounded-t-xl"
                         alt="Random Dataset Cover"
                     />
