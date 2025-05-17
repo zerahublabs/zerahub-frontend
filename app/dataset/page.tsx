@@ -11,6 +11,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import moment from 'moment';
 import Image from 'next/image';
 import React from 'react';
 
@@ -23,10 +24,12 @@ export default function Page() {
 						<CardTitle>About Datasets</CardTitle>
 					</CardHeader>
 					<CardContent>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa id
-						consequuntur hic possimus doloribus, nemo, error similique nulla, illum
-						ullam fuga eius tempore eum molestiae earum distinctio? Voluptatem,
-						dignissimos voluptatibus!
+						<p className='text-muted-foreground text-sm p-6 rounded-2xl bg-neutral-200/30'>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa id
+							consequuntur hic possimus doloribus, nemo, error similique nulla, illum
+							ullam fuga eius tempore eum molestiae earum distinctio? Voluptatem,
+							dignissimos voluptatibus!
+						</p>
 					</CardContent>
 				</Card>
 				<Card>
@@ -59,6 +62,136 @@ export default function Page() {
 						</Table>
 					</CardContent>
 				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Dataset Files</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Table className="border">
+							<TableHeader>
+								<TableRow>
+									<TableHead>File Name</TableHead>
+									<TableHead>Size</TableHead>
+									<TableHead>Type</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{[
+									{
+										name: 'dataset.csv',
+										size: '20 MB',
+										type: 'CSV',
+									},
+									{
+										name: 'dataset.json',
+										size: '10 MB',
+										type: 'JSON',
+									},
+								].map((item) => (
+									<TableRow key={item.name}>
+										<TableCell>{item.name}</TableCell>
+										<TableCell>{item.size}</TableCell>
+										<TableCell>{item.type}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Samples</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Table className="border">
+							<TableHeader>
+								<TableRow>
+									<TableHead>Sample</TableHead>
+									<TableHead>Value</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{[
+									{
+										name: 'Sample 1',
+										value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+									},
+									{
+										name: 'Sample 2',
+										value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+									},
+								].map((item) => (
+									<TableRow key={item.name}>
+										<TableCell>{item.name}</TableCell>
+										<TableCell>{item.value}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Payment Histories</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Table className="border">
+							<TableHeader>
+								<TableRow>
+									<TableHead>Transaction ID</TableHead>
+									<TableHead>Amount</TableHead>
+									<TableHead>Date</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{[
+									{
+										id: '0x0000...',
+										amount: '0.001 ETH',
+										date: new Date(),
+									},
+									{
+										id: '0x0001...',
+										amount: '0.002 ETH',
+										date: new Date(),
+									},
+								].map((item) => (
+									<TableRow key={item.id}>
+										<TableCell>{item.id}</TableCell>
+										<TableCell>{item.amount}</TableCell>
+										<TableCell>{moment(item.date).format('LLL')}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>License</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-muted-foreground text-sm p-6 rounded-2xl bg-neutral-200/30">
+							<div className="text-center font-bold">Free for Commercial Use</div>
+							<br />
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa id
+								consequuntur hic possimus doloribus, nemo, error similique nulla,
+								illum ullam fuga eius tempore eum molestiae earum distinctio?
+								Voluptatem, dignissimos voluptatibus! Lorem ipsum dolor sit amet
+								consectetur adipisicing elit. Et, veniam sed pariatur modi neque
+								optio, odit quisquam rem perspiciatis officia similique
+								voluptatibus, ducimus amet numquam expedita voluptas at hic ullam!
+								<br />
+								<br />
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque
+								exercitationem temporibus est ut, iste eveniet esse debitis
+								voluptatum porro, recusandae aspernatur corporis culpa quaerat
+								expedita, molestiae praesentium vitae? Unde, asperiores.
+							</p>
+						</div>
+					</CardContent>
+				</Card>
 			</div>
 			<div className="sticky top-4 self-start flex flex-col gap-4">
 				<Card className="w-[300px]">
@@ -66,6 +199,9 @@ export default function Page() {
 						<div className="flex flex-col gap-6">
 							<div className="overflow-hidden">
 								<AspectRatio ratio={16 / 9}>
+									<Badge className="absolute top-2 left-2 z-10" variant="default">
+										Purchased
+									</Badge>
 									<Image
 										src={
 											'https://dummyimage.com/600x400/000/fff&text=Wikipedia+Datasets'
@@ -92,7 +228,8 @@ export default function Page() {
 										<Badge variant={'outline'}>20 MB</Badge>
 										<Badge variant={'outline'}>CSV</Badge>
 									</div>
-									<Button>Buy Dataset</Button>
+									{/* <Button>Buy Dataset</Button> */}
+									<Button>Download Dataset</Button>
 								</div>
 							</div>
 						</div>
@@ -105,8 +242,8 @@ export default function Page() {
 					<CardContent>
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
-								<h3 className="font-semibold">Categories</h3>
-								<div className="grid gap-2 grid-cols-4">
+								<h3 className="font-semibold text-sm">Categories</h3>
+								<div className="grid gap-2 grid-cols-4 bg-neutral-200/30 p-2 rounded-2xl divide-x">
 									{[
 										'Wiki',
 										'Science',
@@ -126,6 +263,24 @@ export default function Page() {
 										</Badge>
 									))}
 								</div>
+							</div>
+							<div className="flex flex-col gap-2">
+								<h3 className="font-semibold text-sm">Published At</h3>
+								<p className="text-muted-foreground text-sm p-2 rounded-2xl bg-neutral-200/30">
+									{moment(new Date()).format('LLL')}
+								</p>
+							</div>
+							<div className="flex flex-col gap-2">
+								<h3 className="font-semibold text-sm">Publisher</h3>
+								<p className="text-muted-foreground text-sm p-2 rounded-2xl bg-neutral-200/30">
+									<a href="#">0x0000...</a>
+								</p>
+							</div>
+							<div className="flex flex-col gap-2">
+								<h3 className="font-semibold text-sm">License</h3>
+								<p className="text-muted-foreground text-sm p-2 rounded-2xl bg-neutral-200/30">
+									<a href="#">Free for Commercial Use</a>
+								</p>
 							</div>
 						</div>
 					</CardContent>
