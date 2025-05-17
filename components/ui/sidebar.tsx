@@ -93,14 +93,14 @@ export const DesktopSidebar = ({
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
   return (
-    <>
+    <div>
       <motion.div
         className={cn(
-          "h-full px-4 py-4 hidden  md:flex md:flex-col bg-card w-[300px] shrink-0",
+          "h-full px-4 py-4 hidden md:flex md:flex-col bg-card w-[150px] shrink-0",
           className,
         )}
         animate={{
-          width: animate ? (open ? "200px" : "60px") : "300px",
+          width: animate ? (open ? "150px" : "60px") : "150px",
         }}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
@@ -108,7 +108,7 @@ export const DesktopSidebar = ({
       >
         {children}
       </motion.div>
-    </>
+    </div>
   );
 };
 
