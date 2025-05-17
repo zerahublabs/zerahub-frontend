@@ -25,6 +25,7 @@ export const buyer_samples: BuyerProps[] = [
     ...Array.from({ length: 100 }).map((_, i) => ({
         address: seededRandomEvmWallet(),
         dataset: dataset_samples[i % dataset_samples.length],
-        timestamp: new Date(Date.now() - Math.floor(rand() * 100000000)),
+        // Use a fixed base timestamp for deterministic SSR/CSR rendering
+        timestamp: new Date(1700000000000 - Math.floor(rand() * 100000000)),
     })),
 ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
