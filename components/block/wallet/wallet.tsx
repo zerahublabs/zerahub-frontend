@@ -5,16 +5,16 @@ import WalletAccount from './wallet-account';
 import { Button } from '@/components/ui/button';
 
 export default function Wallet() {
-    const { open } = useAppKit();
-    const { isConnected } = useAppKitAccount();
+	const { open } = useAppKit();
+	const { isConnected } = useAppKitAccount();
 
-    if (!isConnected) {
-        return (
-            <Button variant={'outline'} onClick={() => open({ view: 'Connect' })}>
-                Connect Wallet
-            </Button>
-        );
-    }
+	if (!isConnected) {
+		return (
+			<Button variant={'outline'} onClick={() => open({ view: 'Connect' })}>
+				Connect Wallet
+			</Button>
+		);
+	}
 
-    return <WalletAccount />;
+	return <WalletAccount />;
 }

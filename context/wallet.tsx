@@ -11,48 +11,46 @@ const queryClient = new QueryClient();
 
 // Set up metadata
 const metadata = {
-    name: 'next-reown-appkit',
-    description: 'next-reown-appkit',
-    url: 'https://localhost',
-    icons: ['https://avatars.githubusercontent.com/u/179229932'],
+	name: 'next-reown-appkit',
+	description: 'next-reown-appkit',
+	url: 'https://localhost',
+	icons: ['https://avatars.githubusercontent.com/u/179229932'],
 };
 
 // Create the modal
 export const modal = createAppKit({
-    adapters: [wagmiAdapter],
-    projectId,
-    networks,
-    metadata,
-    themeMode: 'light',
-    features: {
-        walletFeaturesOrder: [
-            'send'
-        ],
-        analytics: true,
-        swaps: false,
-        legalCheckbox: true,
-        connectMethodsOrder: ['wallet']
-    },
-    enableWalletConnect: false,
-    themeVariables: {
-        '--w3m-accent': '#000000',
-    },
+	adapters: [wagmiAdapter],
+	projectId,
+	networks,
+	metadata,
+	themeMode: 'light',
+	features: {
+		walletFeaturesOrder: ['send'],
+		analytics: true,
+		swaps: false,
+		legalCheckbox: true,
+		connectMethodsOrder: ['wallet'],
+	},
+	enableWalletConnect: false,
+	themeVariables: {
+		'--w3m-accent': '#000000',
+	},
 });
 
 function WalletContextProvider({
-    children,
-    cookies,
+	children,
+	cookies,
 }: {
-    children: ReactNode;
-    cookies: string | null;
+	children: ReactNode;
+	cookies: string | null;
 }) {
-    const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
+	const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
 
-    return (
-        <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-        </WagmiProvider>
-    );
+	return (
+		<WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		</WagmiProvider>
+	);
 }
 
 export default WalletContextProvider;
