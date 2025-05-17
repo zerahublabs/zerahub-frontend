@@ -25,8 +25,13 @@ export const modal = createAppKit({
     metadata,
     themeMode: 'light',
     features: {
+        walletFeaturesOrder: [
+            'send'
+        ],
         analytics: true,
-        connectMethodsOrder: ['wallet'],
+        swaps: false,
+        legalCheckbox: true,
+        connectMethodsOrder: ['wallet']
     },
     enableWalletConnect: false,
     themeVariables: {
