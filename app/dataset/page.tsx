@@ -17,7 +17,7 @@ import React from 'react';
 
 export default function Page() {
 	return (
-		<div className="flex w-full p-4 flex-row gap-4 rounded-tl-2xl border">
+		<div className="flex w-full p-4 flex-col-reverse lg:flex-row gap-4 rounded-tl-2xl border">
 			<div className="flex flex-col w-full gap-4">
 				<Card>
 					<CardHeader>
@@ -193,8 +193,8 @@ export default function Page() {
 					</CardContent>
 				</Card>
 			</div>
-			<div className="sticky top-4 self-start flex flex-col gap-4">
-				<Card className="w-[300px]">
+			<div className="lg:sticky top-4 self-start flex flex-col gap-4 w-full lg:w-[300px]">
+				<Card className='w-[300px]'>
 					<CardContent>
 						<div className="flex flex-col gap-6">
 							<div className="overflow-hidden">
@@ -235,7 +235,7 @@ export default function Page() {
 						</div>
 					</CardContent>
 				</Card>
-				<Card className="w-[300px]">
+				<Card className='w-[300px]'>
 					<CardHeader>
 						<CardTitle>Dataset Summary</CardTitle>
 					</CardHeader>
