@@ -20,6 +20,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Separator } from '@/components/ui/separator';
 
 export default function WalletAccount() {
 	const { disconnect } = useDisconnect();
@@ -41,13 +42,13 @@ export default function WalletAccount() {
 					</div>
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-[100px] space-y-2 flex flex-col justify-between h-full">
+			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-[100px] space-y-2 flex flex-col justify-between h-full p-2">
 				<div>
 					<DrawerHeader>
 						<DrawerTitle>Account</DrawerTitle>
 					</DrawerHeader>
 					<div className="flex flex-col gap-4 shrink-0">
-						<div className="flex items-center justify-between px-4">
+						<div className="flex items-center justify-between px-4 py-2">
 							<div className="inline-flex items-center gap-4">
 								<AvatarImage string={address} size={40} />
 								<div className="flex flex-col justify-center">
@@ -58,6 +59,11 @@ export default function WalletAccount() {
 								</div>
 							</div>
 							<Badge>Connected</Badge>
+						</div>
+						<Separator orientation={"vertical"} />
+						<div className="flex items-center justify-between px-4">
+							<p className="text-sm text-muted-foreground">Network</p>
+							<Badge variant={'outline'}>Ethereum</Badge>
 						</div>
 					</div>
 				</div>
