@@ -41,7 +41,7 @@ export default function AppProvider(props: { children: ReactNode }) {
 		},
 		{
 			label: 'My Datasets',
-			href: '#',
+			href: '/my-datasets',
 			icon: <IconDatabase className="h-5 w-5 shrink-0 text-card-foreground" />,
 		},
 		{
