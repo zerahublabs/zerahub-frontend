@@ -2,13 +2,7 @@ import React from 'react';
 import { useAppKitAccount, useDisconnect } from '@reown/appkit/react';
 import { Button } from '@/components/ui/button';
 import AvatarImage from 'boring-avatars';
-import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Badge } from '@/components/ui/badge';
 import {
 	AlertDialog,
@@ -31,7 +25,7 @@ export default function WalletAccount() {
 	}
 
 	return (
-		<Drawer direction="right">
+		<Drawer direction={'bottom'}>
 			<DrawerTrigger asChild>
 				<Button variant={'outline'}>
 					<div className="flex items-center gap-2">
@@ -42,29 +36,27 @@ export default function WalletAccount() {
 					</div>
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-[100px] space-y-2 flex flex-col justify-between h-full p-2">
-				<div>
-					<DrawerHeader>
-						<DrawerTitle>Account</DrawerTitle>
-					</DrawerHeader>
-					<div className="flex flex-col gap-4 shrink-0">
-						<div className="flex items-center justify-between px-4 py-2">
-							<div className="inline-flex items-center gap-4">
-								<AvatarImage string={address} size={40} />
-								<div className="flex flex-col justify-center">
-									<p className="font-semibold text-foreground">
-										{address?.substring(0, 8)}...
-									</p>
-									<p className="text-sm text-muted-foreground">1 ETH</p>
-								</div>
+			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-1/2 flex flex-col gap-4 justify-between pb-2 px-2">
+				<DrawerHeader>
+					<DrawerTitle>Account</DrawerTitle>
+				</DrawerHeader>
+				<div className="flex flex-col gap-4 shrink-0">
+					<div className="flex items-center justify-between px-4 pb-2">
+						<div className="inline-flex items-center gap-4">
+							<AvatarImage string={address} size={40} />
+							<div className="flex flex-col justify-center">
+								<p className="font-semibold text-foreground">
+									{address?.substring(0, 8)}...
+								</p>
+								<p className="text-sm text-muted-foreground">1 ETH</p>
 							</div>
-							<Badge>Connected</Badge>
 						</div>
-						<Separator orientation={"vertical"} />
-						<div className="flex items-center justify-between px-4">
-							<p className="text-sm text-muted-foreground">Network</p>
-							<Badge variant={'outline'}>Ethereum</Badge>
-						</div>
+						<Badge>Connected</Badge>
+					</div>
+					<Separator orientation={'vertical'} />
+					<div className="flex items-center justify-between px-4">
+						<p className="text-sm text-muted-foreground">Network</p>
+						<Badge variant={'outline'}>Ethereum</Badge>
 					</div>
 				</div>
 				<div className="px-4 pb-4">
