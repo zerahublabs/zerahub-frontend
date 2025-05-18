@@ -26,12 +26,12 @@ export default function Home() {
 	}, [emblaApi]);
 
 	return (
-		<div className="flex w-full p-4 flex-row gap-4 rounded-tl-2xl border">
+		<div className="flex w-full p-4 flex-col lg:flex-row gap-4 rounded-tl-2xl border">
 			<div className="flex w-full flex-col gap-6">
 				<div className="overflow-hidden" ref={emblaRef}>
 					<div className="flex">
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 3}>
+							<AspectRatio ratio={16 / 9}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -41,7 +41,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 3}>
+							<AspectRatio ratio={16 / 9}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -51,7 +51,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 3}>
+							<AspectRatio ratio={16 / 9}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -61,7 +61,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 3}>
+							<AspectRatio ratio={16 / 9}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -72,7 +72,7 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="grid grid-cols-3 gap-4 overflow-x-auto">
+				<div className="grid grid-cols-2 lg:grid-cols-3 gap-4 overflow-x-auto">
 					{dataset_samples.map((item, i) => (
 						<DatasetItem key={i} item={item} />
 					))}
