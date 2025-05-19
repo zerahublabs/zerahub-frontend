@@ -11,7 +11,7 @@ export function DatasetItem(props: { item: DatasetProps }) {
 	const [hovered, setHovered] = useState(false);
 
 	return (
-		<Link href={`/dataset`} className="w-full">
+		<Link href={`/#`} className="w-full">
 			<Card
 				className="mb-2 py-0 hover:cursor-pointer relative overflow-hidden"
 				onMouseEnter={() => setHovered(true)}
@@ -27,7 +27,7 @@ export function DatasetItem(props: { item: DatasetProps }) {
 						/>
 					</AspectRatio>
 				</div>
-				<CardContent className="flex flex-col gap-4 mb-4">
+				<CardContent className="flex flex-col gap-4 mb-4 shrink-0">
 					<CardTitle className="text-muted-foreground">
 						{props.item.title.substring(0, 20)}...
 					</CardTitle>
@@ -36,17 +36,17 @@ export function DatasetItem(props: { item: DatasetProps }) {
 							{props.item.price}
 						</small>
 					</div>
-					<div className="h-10">
+					<div className="lg:h-10">
 						{hovered ? (
 							<Button className="w-full">Details</Button>
 						) : (
 							<div
-								className={`grid gap-2 grid-cols-4 bg-neutral-200/30 p-2 rounded-2xl`}
+								className={`grid gap-2 grid-cols-2 lg:grid-cols-4 bg-neutral-200/30 p-2 rounded-2xl`}
 							>
 								<Badge variant={'outline'}>1 Files</Badge>
 								<Badge variant={'outline'}>10k+</Badge>
-								<Badge variant={'outline'}>20 MB</Badge>
-								<Badge variant={'outline'}>CSV</Badge>
+								<Badge variant={'outline'} className='hidden md:block lg:block'>20 MB</Badge>
+								<Badge variant={'outline'} className='hidden md:block lg:block'>CSV</Badge>
 							</div>
 						)}
 					</div>
