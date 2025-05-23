@@ -1,7 +1,9 @@
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 import React from 'react';
 
@@ -27,10 +29,24 @@ export default function Page() {
 					</CardContent>
 				</Card>
 				<Card className="flex flex-1">
-					<CardContent className="flex gap-6 flex-col justify-center items-center flex-1">
-						<p className="text-muted-foreground text-sm text-center font-semibold">
-							Dataset form here
-						</p>
+					<CardHeader>
+						<CardTitle>Dataset Info</CardTitle>
+						<CardDescription>
+							Fill in the dataset information below. This will be used to create the
+							dataset on the blockchain.
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="flex gap-6 flex-col justify-start items-center flex-1">
+						<form className="flex flex-col gap-6 w-full">
+							<div className="flex flex-col gap-2">
+								<Label htmlFor="dataset-name" className="text-sm font-semibold">
+									Dataset Name
+								</Label>
+								<Input
+									placeholder='Enter your dataset name'
+								/>
+							</div>
+						</form>
 					</CardContent>
 				</Card>
 			</div>
@@ -88,7 +104,9 @@ export default function Page() {
 								</div>
 							</div>
 						</div>
-						<Button className="w-full mt-auto">Create Dataset</Button>
+						<Button className="w-full mt-auto" disabled>
+							Publish Dataset
+						</Button>
 					</div>
 				</CardContent>
 			</Card>

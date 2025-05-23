@@ -78,8 +78,8 @@ export default function Home() {
 					))}
 				</div>
 			</div>
-			<div className="flex-1 sticky top-4 self-start">
-				<Card className="w-[300px] px-4 py-4">
+			<div className="w-full lg:w-[300px] sticky top-4 self-start">
+				<Card className="w-full lg:w-[300px] px-4 py-4">
 					<Table>
 						<TableBody>
 							{buyer_samples.slice(0, 10).map((buyer, i) => (
