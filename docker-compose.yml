@@ -11,5 +11,11 @@ services:
       - '3000:3000'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - app-bridge
     environment:
       - NODE_ENV=production
+
+networks:
+  app-bridge:
+    driver: bridge
