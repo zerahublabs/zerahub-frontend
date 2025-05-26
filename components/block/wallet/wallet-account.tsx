@@ -1,7 +1,14 @@
-'use client'
+'use client';
 import { Button } from '@/components/ui/button';
 import AvatarImage from 'boring-avatars';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import {
+	Drawer,
+	DrawerContent,
+	DrawerDescription,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from '@/components/ui/drawer';
 import { Badge } from '@/components/ui/badge';
 import {
 	AlertDialog,
@@ -15,13 +22,23 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/hooks/use-auth';
+import { useMe } from '@/hooks/use-me';
+import { useEffect, useState } from 'react';
+import UpdateUsernameDialog from '../dialogs/update-username';
 
 export default function WalletAccount() {
-	const {
-		isConnected,
-		address,
-		disconnect,
-	} = useAuth()
+	const { isConnected, address, disconnect } = useAuth();
+	const { username } = useMe();
+	const [isNeedsUpdateUsername, setIsNeedsUpdateUsername] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (isConnected && (!username || username.trim() === '') && !isNeedsUpdateUsername) {
+			setIsNeedsUpdateUsername(true);
+		} else if (isNeedsUpdateUsername && username && username.trim() !== '') {
+			setIsNeedsUpdateUsername(false);
+		}
+	}, [username, isConnected, isNeedsUpdateUsername]);
+
 	if (!isConnected) {
 		return null;
 	}
@@ -41,6 +58,9 @@ export default function WalletAccount() {
 			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-1/2 flex flex-col gap-4 justify-between pb-2 px-2">
 				<DrawerHeader>
 					<DrawerTitle>Account</DrawerTitle>
+					<DrawerDescription>
+						Manage your wallet account and settings.
+					</DrawerDescription>
 				</DrawerHeader>
 				<div className="flex flex-col gap-4 shrink-0">
 					<div className="flex items-center justify-between px-4 pb-2">
@@ -80,6 +100,10 @@ export default function WalletAccount() {
 							</AlertDialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
+					<UpdateUsernameDialog
+						isOpen={isNeedsUpdateUsername}
+						setIsOpen={setIsNeedsUpdateUsername}
+					/>
 				</div>
 			</DrawerContent>
 		</Drawer>
