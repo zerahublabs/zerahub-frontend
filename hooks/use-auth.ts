@@ -26,23 +26,23 @@ interface UpdateUsernameDataProps {
 }
 
 export function useAuthRequest(data: AuthRequestDataProps) {
-	const [tokenStorage, setTokenStorage] = useState<string | null | undefined>(undefined);
+	const [tokenStorage, setTokenStorage] = useState<string | undefined>(undefined);
 	const [addressStorage, setAddressStorage] = useState<`0x${string}`>();
-	const [usernameStorage, setUsernameStorage] = useState<string>();
-	const { sendRequest, loading, data: response } = useHttp();
+	const [username, setUsername] = useState<string | undefined>();
+	const [isSuccess, setIsSuccess] = useState<boolean>(false);
+	const { sendRequest, data: response } = useHttp();
 
 	useEffect(() => {
 		const responseWithInterface = response as AuthResponseDataProps;
 		if (responseWithInterface && responseWithInterface.status == 'ok') {
 			const token = responseWithInterface.data.token;
 			const address = responseWithInterface.data.address;
-			const username = responseWithInterface.data.username;
-
+			setUsername(responseWithInterface.data.username);
 			setTokenStorage(token);
 			setAddressStorage(address);
-			setUsernameStorage(username);
+			setIsSuccess(true)
 		}
-	}, [response, setTokenStorage, setAddressStorage, setUsernameStorage]);
+	}, [response, setTokenStorage, setAddressStorage]);
 
 	const sendAuthRequest = useCallback(() => {
 		sendRequest({
@@ -53,10 +53,10 @@ export function useAuthRequest(data: AuthRequestDataProps) {
 	}, [data, sendRequest]);
 
 	return {
-		loading,
+		username,
+		isSuccess,
 		token: tokenStorage,
 		address: addressStorage,
-		username: usernameStorage,
 		sendAuthRequest,
 	};
 }
@@ -71,7 +71,6 @@ export function useUpdateUsernameRequest() {
 
 	useEffect(() => {
 		const responseWithInterface = response as UpdateUsernameDataProps;
-		console.log(responseWithInterface);
 		if (responseWithInterface && responseWithInterface.status == 'ok') {
 			setIsSuccess(true);
 		}
@@ -129,64 +128,65 @@ export function useAuth() {
 	const { address, isConnected } = useAppKitAccount();
 	const { signMessage, data } = useSignMessage();
 	const { message, nonce } = useSignatureData();
-	const { sendAuthRequest, loading, token, username } = useAuthRequest({
+	const { sendAuthRequest, isSuccess, token, username } = useAuthRequest({
 		address: (address as `0x${string}`) || '',
 		salt: nonce,
 		signature: (data as `0x${string}`) || '',
 	});
 
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [isNeedsUsername, setIsNeedsUsername] = useState(false);
 	const [hasAuthRequestSent, setHasAuthRequestSent] = useState(false);
 	const [isShownSignMessage, setShownSignMessage] = useState(false);
-	const [tokenStorage, setTokenStorage] = useLocalStorageState<string | null>('token', {
-		defaultValue: null,
-	});
-	const [, setUsernameStorage] = useLocalStorageState<string | null>('username', {
-		defaultValue: null,
+	const [tokenStorage, setTokenStorage] = useLocalStorageState<string | undefined>('token', {
+		defaultValue: undefined,
 	});
 
 	// for appkit event disconnected
 	useEffect(() => {
 		if (appkitEventData.event == 'DISCONNECT_SUCCESS') {
-			setTokenStorage(null);
-			setUsernameStorage(null);
+			setTokenStorage(undefined);
 		}
-	}, [appkitEventData, setTokenStorage, setUsernameStorage]);
+	}, [appkitEventData, setTokenStorage]);
 
 	// for store username and token to local storage
 	useEffect(() => {
-		if (typeof username === 'string') {
-			setUsernameStorage(username);
-		}
 		if (token) {
 			setTokenStorage(token);
 		}
-	}, [token, username, setTokenStorage, setUsernameStorage]);
+	}, [token, username, setTokenStorage]);
 
-	// for check if wallet is connected and token storage is not null
+	// for check if wallet is connected and token storage is not undefined
 	useEffect(() => {
-		if (isConnected && tokenStorage == null) {
+		setIsLoading(!!isSuccess || isLoading);
+
+		if (isConnected && typeof tokenStorage == 'undefined') {
 			setShownSignMessage(true);
+		} else if (isConnected && typeof tokenStorage !== 'undefined') {
+			setShownSignMessage(false);
 		}
-	}, [isConnected, tokenStorage]);
+	}, [isConnected, tokenStorage, isSuccess, isLoading]);
 
 	// for send auth request
 	useEffect(() => {
-		if (!hasAuthRequestSent && typeof data != 'undefined' && !loading) {
+		if (!hasAuthRequestSent && typeof data != 'undefined' && !isSuccess) {
 			sendAuthRequest();
 			setHasAuthRequestSent(true);
 		}
-	}, [data, loading, hasAuthRequestSent, sendAuthRequest]);
+	}, [data, isSuccess, hasAuthRequestSent, sendAuthRequest]);
 
 	// for check if user is need username
 	useEffect(() => {
 		if (typeof username == 'undefined' || username == null) {
 			setIsNeedsUsername(true);
+		} else {
+			setIsNeedsUsername(false);
 		}
 	}, [username]);
 
 	// sign message
 	const onSignMessage = useCallback(() => {
+		setIsLoading(true)
 		signMessage({
 			message,
 		});
@@ -196,7 +196,7 @@ export function useAuth() {
 	return {
 		address,
 		isConnected,
-		loading,
+		isLoading,
 		username,
 		token,
 		isNeedsUsername,
