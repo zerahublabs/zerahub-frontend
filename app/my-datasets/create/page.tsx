@@ -1,3 +1,4 @@
+'use client';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+const EditorComp = dynamic(() => import('@/components/ui/mdx-editor'), { ssr: false });
 
 export default function Page() {
 	return (
@@ -19,9 +23,6 @@ export default function Page() {
 						</Button>
 						<Button className="rounded-sm" variant={'outline'}>
 							Sample Data
-						</Button>
-						<Button className="rounded-sm" variant={'outline'}>
-							Pricing & Payments
 						</Button>
 						<Button className="rounded-sm" variant={'outline'}>
 							Metadata
@@ -42,9 +43,21 @@ export default function Page() {
 								<Label htmlFor="dataset-name" className="text-sm font-semibold">
 									Dataset Name
 								</Label>
-								<Input
-									placeholder='Enter your dataset name'
-								/>
+								<Input placeholder="Enter your dataset name" />
+							</div>
+							<div className="flex flex-col gap-2">
+								<Label htmlFor="dataset-name" className="text-sm font-semibold">
+									Price
+								</Label>
+								<Input placeholder="Enter your price in usdt" />
+							</div>
+							<div className="flex flex-col gap-2 h-[400px]">
+								<Label htmlFor="dataset-name" className="text-sm font-semibold">
+									Description
+								</Label>
+								<Suspense fallback={null}>
+									<EditorComp markdown="" />
+								</Suspense>
 							</div>
 						</form>
 					</CardContent>
