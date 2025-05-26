@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppKitAccount, useDisconnect } from '@reown/appkit/react';
+'use client'
 import { Button } from '@/components/ui/button';
 import AvatarImage from 'boring-avatars';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
@@ -15,11 +14,14 @@ import {
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Separator } from '@/components/ui/separator';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function WalletAccount() {
-	const { disconnect } = useDisconnect();
-	const { address, isConnected } = useAppKitAccount();
-
+	const {
+		isConnected,
+		address,
+		disconnect,
+	} = useAuth()
 	if (!isConnected) {
 		return null;
 	}
