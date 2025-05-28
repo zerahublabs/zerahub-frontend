@@ -2,9 +2,10 @@
 
 import { wagmiAdapter, projectId, networks } from '@/constants/config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createAppKit } from '@reown/appkit/react';
-import React, { type ReactNode } from 'react';
+import { createAppKit, ThemeMode, useAppKitTheme } from '@reown/appkit/react';
+import React, { useEffect, type ReactNode } from 'react';
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
+import { useTheme } from 'next-themes';
 
 // Set up queryClient
 const queryClient = new QueryClient();
@@ -23,7 +24,6 @@ export const modal = createAppKit({
 	projectId,
 	networks,
 	metadata,
-	themeMode: 'light',
 	features: {
 		walletFeaturesOrder: ['send'],
 		analytics: true,
@@ -44,7 +44,16 @@ function WalletContextProvider({
 	children: ReactNode;
 	cookies: string | null;
 }) {
+	const { theme } = useTheme()
+	const { setThemeMode } = useAppKitTheme()
+
 	const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
+
+	useEffect(() => {
+		if (theme) {
+			setThemeMode(theme as ThemeMode)
+		}
+	}, [theme, setThemeMode])
 
 	return (
 		<WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
