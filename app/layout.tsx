@@ -4,6 +4,7 @@ import { Work_Sans } from 'next/font/google';
 import WalletContextProvider from '@/context/wallet';
 import { headers } from 'next/headers';
 import AppProvider from '@/context';
+import { ThemeProvider } from 'next-themes';
 
 const workSans = Work_Sans({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -24,11 +25,13 @@ export default async function RootLayout({
 	const cookies = headersData.get('cookie');
 
 	return (
-		<html lang="en">
-			<body className={`${workSans.className} antialiased`}>
-				<WalletContextProvider cookies={cookies}>
-					<AppProvider>{children}</AppProvider>
-				</WalletContextProvider>
+		<html lang="en" suppressHydrationWarning>
+			<body className={`${workSans.className} antialiased overscroll-none`}>
+				<ThemeProvider attribute={"class"} defaultTheme={"system"} enableSystem>
+					<WalletContextProvider cookies={cookies}>
+						<AppProvider>{children}</AppProvider>
+					</WalletContextProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
