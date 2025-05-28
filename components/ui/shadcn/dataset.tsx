@@ -11,9 +11,9 @@ export function DatasetItem(props: { item: DatasetProps }) {
 	const [hovered, setHovered] = useState(false);
 
 	return (
-		<Link href={`/dataset`} className="w-full">
+		<Link href={`/dataset`}>
 			<Card
-				className="mb-2 py-0 hover:cursor-pointer relative overflow-hidden"
+				className="w-full mb-2 py-0 hover:cursor-pointer relative overflow-hidden"
 				onMouseEnter={() => setHovered(true)}
 				onMouseLeave={() => setHovered(false)}
 			>
