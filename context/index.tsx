@@ -3,7 +3,7 @@ import React, { ReactNode, Suspense, useMemo } from 'react';
 import { IconBrandTabler, IconDatabase, IconSettings } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/ui/header';
-import Loading from '@/components/ui/loading';
+import Loading from '@/components/ui/shadcn/loading';
 import WelcomeSign from '@/components/block/dialogs/welcome-sign';
 import {
 	Sidebar,
@@ -16,7 +16,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarProvider,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/shadcn/sidebar';
 import Link from 'next/link';
 
 export function AppSidebar() {
@@ -71,16 +71,14 @@ export default function AppProvider(props: { children: ReactNode }) {
 	return (
 		<div
 			className={cn(
-				'mx-auto min-h-screen flex w-full max-w-screen flex-1 flex-col overflow-hidden rounded-md border bg-background md:flex-row',
+				'mx-auto min-h-screen flex w-full max-w-screen flex-1 flex-col rounded-md border bg-background md:flex-row',
 			)}
 		>
 			<SidebarProvider>
 				<AppSidebar />
 				<main className="flex flex-col w-full min-h-screen px-4">
 					<Header />
-					<div className="h-full overflow-y-auto flex-1 min-h-0">
-						<Suspense fallback={<Loading />}>{props.children}</Suspense>
-					</div>
+					<Suspense fallback={<Loading />}>{props.children}</Suspense>
 
 					<WelcomeSign />
 				</main>

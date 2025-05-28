@@ -2,7 +2,7 @@
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
 import React from 'react';
 import WalletAccount from './wallet-account';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/shadcn/button';
 
 export default function Wallet() {
 	const { open } = useAppKit();

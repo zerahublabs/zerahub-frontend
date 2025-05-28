@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/shadcn/button';
 import AvatarImage from 'boring-avatars';
 import {
 	Drawer,
@@ -8,8 +8,8 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from '@/components/ui/drawer';
-import { Badge } from '@/components/ui/badge';
+} from '@/components/ui/shadcn/drawer';
+import { Badge } from '@/components/ui/shadcn/badge';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -19,8 +19,8 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Separator } from '@/components/ui/separator';
+} from '@/components/ui/shadcn/alert-dialog';
+import { Separator } from '@/components/ui/shadcn/separator';
 import { useAuth } from '@/hooks/use-auth';
 import { useMe } from '@/hooks/use-me';
 import { useEffect, useState } from 'react';

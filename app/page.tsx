@@ -1,17 +1,16 @@
 'use client';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Card } from '@/components/ui/card';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
+import 'swiper/css/virtual';
+import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
 import Image from 'next/image';
 import { dataset_samples } from '@/constants/datasets';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { buyer_samples } from '@/constants/buyers';
-import { Receipt } from 'lucide-react';
-import Link from 'next/link';
-import moment from 'moment';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect } from 'react';
-import { DatasetItem } from '@/components/ui/dataset';
+import { DatasetItem } from '@/components/ui/shadcn/dataset';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { A11y, Mousewheel } from 'swiper/modules';
 
 export default function Home() {
 	const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -26,12 +25,12 @@ export default function Home() {
 	}, [emblaApi]);
 
 	return (
-		<div className="flex w-full p-4 flex-col lg:flex-row gap-4 rounded-tl-2xl border">
+		<div className="flex w-full p-4 flex-col lg:flex-row gap-4">
 			<div className="flex w-full flex-col gap-6">
 				<div className="overflow-hidden" ref={emblaRef}>
 					<div className="flex">
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 9}>
+							<AspectRatio ratio={16 / 4}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -41,7 +40,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 9}>
+							<AspectRatio ratio={16 / 4}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -51,7 +50,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 9}>
+							<AspectRatio ratio={16 / 4}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -61,7 +60,7 @@ export default function Home() {
 							</AspectRatio>
 						</div>
 						<div className="flex-shrink-0 flex-grow-0 basis-full">
-							<AspectRatio ratio={16 / 9}>
+							<AspectRatio ratio={16 / 4}>
 								<Image
 									src={'/banner.png'}
 									alt="Gambar"
@@ -72,36 +71,22 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="grid grid-cols-2 lg:grid-cols-3 gap-4 overflow-x-auto">
-					{dataset_samples.map((item, i) => (
-						<DatasetItem key={i} item={item} />
-					))}
-				</div>
-			</div>
-			<div className="w-full lg:w-[300px] sticky top-4 self-start">
-				<Card className="w-full lg:w-[300px] px-4 py-4">
-					<Table>
-						<TableBody>
-							{buyer_samples.slice(0, 10).map((buyer, i) => (
-								<TableRow key={i}>
-									<TableCell>
-										<div className="p-2 text-muted-foreground border flex items-center justify-center rounded-xl">
-											<Receipt size={15} />
-										</div>
-									</TableCell>
-									<TableCell className="flex flex-col justify-center items-start">
-										<Link href={'#'} className="text-primary font-semibold">
-											{buyer.address.substring(0, 10)}
-											{'...'}
-										</Link>
-										<small>{moment(buyer.timestamp).fromNow()}</small>
-									</TableCell>
-									<TableCell>{buyer.dataset.price}</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</Card>
+					<Swiper
+						modules={[A11y, Mousewheel]}
+						spaceBetween={10}
+						slidesPerView={'auto'}
+						mousewheel
+						className="w-full shrink-0 block"
+					>
+						{dataset_samples.slice(0, 10).map((item, i) => (
+							<SwiperSlide
+								key={i}
+								className="flex justify-center w-full max-w-[300px]"
+							>
+								<DatasetItem item={item} />
+							</SwiperSlide>
+						))}
+					</Swiper>
 			</div>
 		</div>
 	);

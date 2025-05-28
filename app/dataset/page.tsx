@@ -1,9 +1,9 @@
 'use client'
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
+import { Separator } from '@/components/ui/shadcn/separator';
 import {
 	Table,
 	TableBody,
@@ -11,14 +11,14 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
+} from '@/components/ui/shadcn/table';
 import moment from 'moment';
 import Image from 'next/image';
 import React from 'react';
 
 export default function Page() {
 	return (
-		<div className="flex w-full p-4 flex-col-reverse lg:flex-row gap-4 rounded-tl-2xl border">
+		<div className="flex w-full flex-col-reverse lg:flex-row gap-4">
 			<div className="flex flex-col w-full gap-4">
 				<Card>
 					<CardHeader>

@@ -1,6 +1,6 @@
 'use client'
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/shadcn/button';
+import { Card, CardContent } from '@/components/ui/shadcn/card';
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
 import Link from 'next/link';
 import React from 'react';
@@ -11,7 +11,7 @@ export default function Page() {
 
 	if (!isConnected) {
 		return (
-			<div className="flex w-full h-full p-4 flex-row gap-4 rounded-tl-2xl border">
+			<div className="flex w-full h-full p-4 flex-row gap-4">
 				<div className="flex w-full flex-col gap-4 flex-1">
 					<Card className="flex flex-1">
 						<CardContent className="flex gap-6 flex-col justify-center items-center flex-1">
@@ -29,7 +29,7 @@ export default function Page() {
 	}
 
 	return (
-		<div className="flex w-full h-full p-4 flex-row gap-4 rounded-tl-2xl border">
+		<div className="flex w-full h-full flex-row gap-4">
 			<div className="flex w-full flex-col gap-4 flex-1">
 				<Card className="flex flex-1">
 					<CardContent className="flex gap-6 flex-col justify-center items-center flex-1">
