@@ -42,7 +42,7 @@ export function AppSidebar() {
 	);
 
 	return (
-		<Sidebar collapsible={'icon'}>
+		<Sidebar variant="floating" collapsible={'icon'}>
 			<SidebarHeader />
 			<SidebarContent>
 				<SidebarGroup>
@@ -75,13 +75,15 @@ export default function AppProvider(props: { children: ReactNode }) {
 			)}
 		>
 			<SidebarProvider>
-				<AppSidebar />
-				<main className="flex flex-col w-full min-h-screen px-4">
-					<Header />
-					<Suspense fallback={<Loading />}>{props.children}</Suspense>
+				<div className="flex w-full overflow-y-hidden">
+					<AppSidebar />
+					<main className="flex-grow h-full overflow-y-auto space-y-2">
+						<Header />
+						<Suspense fallback={<Loading />}>{props.children}</Suspense>
 
-					<WelcomeSign />
-				</main>
+						<WelcomeSign />
+					</main>
+				</div>
 			</SidebarProvider>
 		</div>
 	);
