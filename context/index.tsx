@@ -77,7 +77,7 @@ export default function AppProvider(props: { children: ReactNode }) {
 			<SidebarProvider>
 				<div className="flex w-full overflow-y-hidden">
 					<AppSidebar />
-					<main className="flex-grow h-full overflow-y-auto space-y-2">
+					<main className="flex-grow h-full overflow-y-hidden space-y-2">
 						<Header />
 						<Suspense fallback={<Loading />}>{props.children}</Suspense>
 
