@@ -11,7 +11,7 @@ export default function Page() {
 
 	if (!isConnected) {
 		return (
-			<div className="flex w-full h-full p-4 flex-row gap-4">
+			<div className="flex w-full h-full flex-row gap-4">
 				<div className="flex w-full flex-col gap-4 flex-1">
 					<Card className="flex flex-1">
 						<CardContent className="flex gap-6 flex-col justify-center items-center flex-1">
