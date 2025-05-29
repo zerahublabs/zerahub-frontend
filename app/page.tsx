@@ -1,7 +1,5 @@
 'use client';
-import 'swiper/css';
-import 'swiper/css/scrollbar';
-import 'swiper/css/virtual';
+import 'keen-slider/keen-slider.min.css'
 import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
 import Image from 'next/image';
 import { dataset_samples } from '@/constants/datasets';
@@ -9,13 +7,21 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect } from 'react';
 import { DatasetItem } from '@/components/ui/shadcn/dataset';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, Mousewheel } from 'swiper/modules';
+import { useKeenSlider } from "keen-slider/react"
 
 export default function Home() {
+	const [keenSliderRef] = useKeenSlider({
+		slides: {
+			perView: "auto",
+			spacing: 16
+		},
+		mode: 'snap'
+	})
+
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{
 			loop: true,
+			containScroll: 'trimSnaps'
 		},
 		[Autoplay()],
 	);
@@ -25,7 +31,7 @@ export default function Home() {
 	}, [emblaApi]);
 
 	return (
-		<div className="flex w-full p-4 flex-col lg:flex-row gap-4">
+		<div className="w-full flex p-4 flex-col lg:flex-row gap-4">
 			<div className="flex w-full flex-col gap-6">
 				<div className="overflow-hidden" ref={emblaRef}>
 					<div className="flex">
@@ -36,6 +42,7 @@ export default function Home() {
 									alt="Gambar"
 									fill
 									className="rounded-md object-cover"
+									priority
 								/>
 							</AspectRatio>
 						</div>
@@ -71,22 +78,20 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-					<Swiper
-						modules={[A11y, Mousewheel]}
-						spaceBetween={10}
-						slidesPerView={'auto'}
-						mousewheel
-						className="w-full shrink-0 block"
-					>
+
+				{/* Dataset Cards Slider */}
+				<div className="w-full max-w-screen overflow-hidden">
+					<div ref={keenSliderRef} className="keen-slider">
 						{dataset_samples.slice(0, 10).map((item, i) => (
-							<SwiperSlide
+							<div
 								key={i}
-								className="flex justify-center w-full max-w-[300px]"
+								className="keen-slider__slide !min-w-[280px] !max-w-[320px] h-full"
 							>
 								<DatasetItem item={item} />
-							</SwiperSlide>
+							</div>
 						))}
-					</Swiper>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
