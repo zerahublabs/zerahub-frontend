@@ -10,13 +10,10 @@ import {
 } from '@/components/ui/shadcn/card';
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
-import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
 import { Separator } from '@/components/ui/shadcn/separator';
 import Dropzone from '@/components/ui/shadcn/dropzone';
 import { Save } from 'lucide-react';
-
-const EditorComp = dynamic(() => import('@/components/ui/shadcn/mdx-editor'), { ssr: false });
+import { Textarea } from '@/components/ui/shadcn/textarea';
 
 export default function Page() {
 	return (
@@ -41,20 +38,23 @@ export default function Page() {
 							<Label htmlFor="dataset-name" className="text-sm font-semibold">
 								Dataset Name
 							</Label>
-							<Input placeholder="Enter your dataset name" />
+							<Input />
 						</div>
-						<div className="flex flex-col gap-2 h-[400px]">
+						<div className="flex flex-col gap-2 h-[100px]">
 							<Label htmlFor="dataset-name" className="text-sm font-semibold">
 								Description
 							</Label>
-							<Suspense fallback={null}>
-								<EditorComp markdown="" />
-							</Suspense>
+							<Textarea
+								className='h-full'
+							/>
 						</div>
 					</form>
 					<Separator />
 					<CardFooter className="w-full">
-						<Button className="w-full"><Save />Create Dataset</Button>
+						<Button className="w-full">
+							<Save />
+							Create Dataset
+						</Button>
 					</CardFooter>
 				</CardContent>
 			</Card>
