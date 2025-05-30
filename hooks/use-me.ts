@@ -2,6 +2,7 @@ import { useAppKitAccount } from '@reown/appkit/react';
 import { useLocalStorageState } from 'ahooks';
 import { useCallback, useEffect, useState } from 'react';
 import useHttp from './use-http';
+import { useAuth } from './use-auth';
 
 interface GetMeResponseDataProps {
 	status: 'ok' | 'bad';
@@ -9,17 +10,24 @@ interface GetMeResponseDataProps {
 		username: string;
 		point: number;
 	};
+	detail?: string;
 }
 
 export function useMe() {
-	const { isConnected, address } = useAppKitAccount();
+	const { isConnected } = useAppKitAccount();
 	const { sendRequest, data: response } = useHttp();
+	const { clearToken } = useAuth();
 	const [tokenStorage] = useLocalStorageState<string | null>('token', {
 		defaultValue: null,
 	});
 	const [username, setUsername] = useState<string>();
 
 	const sendGetMeRequest = useCallback(() => {
+		if (!tokenStorage) {
+			setUsername(undefined);
+			return;
+		}
+
 		sendRequest({
 			method: 'GET',
 			url: '/private/me',
@@ -31,18 +39,28 @@ export function useMe() {
 
 	useEffect(() => {
 		const responseWithInterface = response as GetMeResponseDataProps;
-		if (responseWithInterface && responseWithInterface.status == 'ok') {
-			setUsername(responseWithInterface.data.username);
+		if (responseWithInterface) {
+			if (responseWithInterface.status === 'ok') {
+				setUsername(responseWithInterface.data.username);
+			} else if (
+				responseWithInterface.status === 'bad' &&
+				responseWithInterface.detail === 'unauth'
+			) {
+				setUsername(undefined);
+				clearToken();
+			}
 		}
-	}, [response, address, setUsername]);
+	}, [response, clearToken]);
 
 	useEffect(() => {
-		if (isConnected) {
+		if (!isConnected || !tokenStorage) {
+			setUsername(undefined);
+		} else {
 			sendGetMeRequest();
 		}
-	}, [isConnected, sendGetMeRequest]);
+	}, [isConnected, tokenStorage, sendGetMeRequest]);
 
 	return {
-		username
+		username,
 	};
 }

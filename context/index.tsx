@@ -4,7 +4,6 @@ import { IconBrandTabler, IconDatabase, IconSettings } from '@tabler/icons-react
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/ui/header';
 import Loading from '@/components/ui/shadcn/loading';
-import WelcomeSign from '@/components/block/dialogs/welcome-sign';
 import {
 	Sidebar,
 	SidebarContent,
@@ -18,6 +17,9 @@ import {
 	SidebarProvider,
 } from '@/components/ui/shadcn/sidebar';
 import Link from 'next/link';
+import { Toaster } from '@/components/ui/shadcn/sonner';
+import WelcomeSignProvider from '@/components/providers/welcome-sign-provider';
+import UsernameProvider from '@/components/providers/username-provider';
 
 export function AppSidebar() {
 	const links = useMemo(
@@ -81,7 +83,9 @@ export default function AppProvider(props: { children: ReactNode }) {
 						<Header />
 						<Suspense fallback={<Loading />}>{props.children}</Suspense>
 
-						<WelcomeSign />
+						<Toaster />
+						<WelcomeSignProvider />
+						<UsernameProvider />
 					</main>
 				</div>
 			</SidebarProvider>

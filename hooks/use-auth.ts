@@ -142,12 +142,17 @@ export function useAuth() {
 		defaultValue: undefined,
 	});
 
+	const clearToken = useCallback(() => {
+		setTokenStorage(undefined);
+		setShownSignMessage(true);
+	}, [setTokenStorage]);
+
 	// for appkit event disconnected
 	useEffect(() => {
 		if (appkitEventData.event == 'DISCONNECT_SUCCESS') {
-			setTokenStorage(undefined);
+			clearToken();
 		}
-	}, [appkitEventData, setTokenStorage]);
+	}, [appkitEventData, clearToken]);
 
 	// for store username and token to local storage
 	useEffect(() => {
@@ -201,8 +206,10 @@ export function useAuth() {
 		token,
 		isNeedsUsername,
 		isShownSignMessage,
+		setShownSignMessage,
 		disconnect,
 		onSignMessage,
 		setIsNeedsUsername,
+		clearToken,
 	};
 }
