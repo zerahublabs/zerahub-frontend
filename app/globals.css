@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import "@mdxeditor/editor/style.css";
 @import 'keen-slider/keen-slider.min.css';
 
 @custom-variant dark (&:is(.dark *));
