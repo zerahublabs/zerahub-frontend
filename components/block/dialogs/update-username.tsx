@@ -11,11 +11,13 @@ import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { useUpdateUsernameRequest } from '@/hooks/use-auth';
 import { LoaderCircle } from 'lucide-react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { toast } from 'sonner';
 
 export default function UpdateUsernameDialog(props: {
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
+	setIsNeedsUpdateUsername: (needsUpdate: boolean) => void;
 }) {
 	const { isOpen, setIsOpen } = props;
 	const { isSuccess, loading, username, setUsername, sendUpdateRequest } =
@@ -27,8 +29,19 @@ export default function UpdateUsernameDialog(props: {
 		}
 	}, [isSuccess, setIsOpen]);
 
+	const onOpenChange = useCallback((open: boolean) => {
+		console.log('open', open);
+		console.log('username', username);
+		if (!username) {
+			toast.error('Please enter a username to complete your profile.');
+			return;
+		}
+	}, [
+		username
+	])
+
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+		<Dialog open={isOpen} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Update</DialogTitle>
