@@ -13,9 +13,3 @@ services:
       - '3000:3000'
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    networks:
-      - app-bridge
-
-networks:
-  app-bridge:
-    driver: bridge
