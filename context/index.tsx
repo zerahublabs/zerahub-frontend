@@ -77,17 +77,16 @@ export default function AppProvider(props: { children: ReactNode }) {
 			)}
 		>
 			<SidebarProvider>
-				<div className="flex w-full overflow-y-hidden">
+				<div className="flex w-full overflow-y-hidden h-full">
 					<AppSidebar />
 					<main className="flex-grow h-full overflow-y-hidden space-y-2">
-						<Header />
 						<div className="pr-2 mx-auto">
+							<Header />
 							<Suspense fallback={<Loading />}>{props.children}</Suspense>
+							<Toaster />
+							<WelcomeSignProvider />
+							<UsernameProvider />
 						</div>
-
-						<Toaster />
-						<WelcomeSignProvider />
-						<UsernameProvider />
 					</main>
 				</div>
 			</SidebarProvider>
