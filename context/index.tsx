@@ -3,7 +3,6 @@ import React, { ReactNode, Suspense, useMemo } from 'react';
 import { IconBrandTabler, IconDatabase, IconSettings } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/ui/header';
-import Loading from '@/components/ui/shadcn/loading';
 import {
 	Sidebar,
 	SidebarContent,
@@ -20,6 +19,7 @@ import Link from 'next/link';
 import { Toaster } from '@/components/ui/shadcn/sonner';
 import WelcomeSignProvider from '@/components/providers/welcome-sign-provider';
 import UsernameProvider from '@/components/providers/username-provider';
+import Loading from '@/app/loading';
 
 export function AppSidebar() {
 	const links = useMemo(
@@ -81,7 +81,9 @@ export default function AppProvider(props: { children: ReactNode }) {
 					<AppSidebar />
 					<main className="flex-grow h-full overflow-y-hidden space-y-2">
 						<Header />
-						<Suspense fallback={<Loading />}>{props.children}</Suspense>
+						<div className="pr-2 mx-auto">
+							<Suspense fallback={<Loading />}>{props.children}</Suspense>
+						</div>
 
 						<Toaster />
 						<WelcomeSignProvider />
