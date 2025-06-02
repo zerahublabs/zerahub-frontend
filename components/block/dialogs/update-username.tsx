@@ -9,39 +9,20 @@ import {
 } from '@/components/ui/shadcn/dialog';
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
-import { useUpdateUsernameRequest } from '@/hooks/use-auth';
 import { LoaderCircle } from 'lucide-react';
-import React, { useCallback, useEffect } from 'react';
-import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function UpdateUsernameDialog(props: {
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
 	setIsNeedsUpdateUsername: (needsUpdate: boolean) => void;
 }) {
+	const [username, setUsername] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
 	const { isOpen, setIsOpen } = props;
-	const { isSuccess, loading, username, setUsername, sendUpdateRequest } =
-		useUpdateUsernameRequest();
-
-	useEffect(() => {
-		if (isSuccess) {
-			setIsOpen(false);
-		}
-	}, [isSuccess, setIsOpen]);
-
-	const onOpenChange = useCallback((open: boolean) => {
-		console.log('open', open);
-		console.log('username', username);
-		if (!username) {
-			toast.error('Please enter a username to complete your profile.');
-			return;
-		}
-	}, [
-		username
-	])
 
 	return (
-		<Dialog open={isOpen} onOpenChange={onOpenChange}>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Update</DialogTitle>
@@ -54,14 +35,14 @@ export default function UpdateUsernameDialog(props: {
 						<Label htmlFor="username">Username</Label>
 						<Input
 							className="col-span-3"
-							value={username}
+							value={""}
 							onChange={(e) => setUsername(e.target.value)}
 						/>
 					</div>
 				</div>
 				<DialogFooter className="flex-end">
-					<Button disabled={loading} onClick={() => sendUpdateRequest()}>
-						{loading && <LoaderCircle className="animate-spin" />} Save
+					<Button disabled={isLoading} onClick={() => console.log('ok')}>
+						{isLoading && <LoaderCircle className="animate-spin" />} Save
 					</Button>
 				</DialogFooter>
 			</DialogContent>
