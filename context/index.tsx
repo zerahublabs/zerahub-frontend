@@ -18,7 +18,6 @@ import {
 import Link from 'next/link';
 import { Toaster } from '@/components/ui/shadcn/sonner';
 import WelcomeSignProvider from '@/components/providers/welcome-sign-provider';
-import UsernameProvider from '@/components/providers/username-provider';
 import Loading from '@/app/loading';
 
 export function AppSidebar() {
@@ -85,7 +84,6 @@ export default function AppProvider(props: { children: ReactNode }) {
 							<Suspense fallback={<Loading />}>{props.children}</Suspense>
 							<Toaster />
 							<WelcomeSignProvider />
-							<UsernameProvider />
 						</div>
 					</main>
 				</div>

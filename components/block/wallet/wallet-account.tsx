@@ -21,12 +21,12 @@ import {
 	AlertDialogTrigger,
 } from '@/components/ui/shadcn/alert-dialog';
 import { Separator } from '@/components/ui/shadcn/separator';
-import { useAuth } from '@/hooks/use-auth';
-import { useMe } from '@/hooks/use-me';
+import { useAppKitAccount, useDisconnect } from '@reown/appkit/react';
 
 export default function WalletAccount() {
-	const { isConnected, address, disconnect } = useAuth();
-	const { username } = useMe();
+	const { isConnected, address } = useAppKitAccount();
+	const { disconnect } = useDisconnect();
+	const username = "okegass"
 
 	if (!isConnected) {
 		return null;

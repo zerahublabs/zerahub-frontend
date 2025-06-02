@@ -7,16 +7,16 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/shadcn/dialog';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuthentication } from '@/hooks/use-auth';
 import { LoaderCircle } from 'lucide-react';
 import React, { useState } from 'react';
 
 export default function WelcomeSign() {
-	const { isShownSignMessage, isLoading, onSignMessage } = useAuth();
+	const { isSignIn, isLoading, onSignInHandler, setIsSignIn } = useAuthentication();
 	const [isAcceptedTerms, setIsAcceptedTerms] = useState<boolean>(false);
 
 	return (
-		<Dialog open={isShownSignMessage}>
+		<Dialog open={isSignIn} onOpenChange={setIsSignIn}>
 			<DialogContent className="w-sm">
 				<DialogHeader>
 					<DialogTitle className="text-center text-lg font-semibold">
@@ -41,7 +41,7 @@ export default function WelcomeSign() {
 				<DialogFooter>
 					<Button
 						disabled={!isAcceptedTerms || isLoading}
-						onClick={onSignMessage}
+						onClick={onSignInHandler}
 						className="w-full"
 					>
 						{isLoading && <LoaderCircle className="animate-spin" />}
