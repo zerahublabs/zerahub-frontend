@@ -1,21 +1,15 @@
-import { useState } from 'react';
 import { Card, CardContent, CardTitle } from './card';
 import { AspectRatio } from './aspect-ratio';
 import Image from 'next/image';
 import { DatasetProps } from '@/constants/datasets';
 import { Badge } from './badge';
-import { Button } from './button';
 import Link from 'next/link';
 
 export function DatasetItem(props: { item: DatasetProps }) {
-	const [hovered, setHovered] = useState(false);
-
 	return (
-		<Link href={'/dataset'}>
+		<Link href={`/dataset?id=${props.item.title}`}>
 			<Card
-				className="mb-2 py-0 hover:cursor-pointer relative overflow-hidden"
-				onMouseEnter={() => setHovered(true)}
-				onMouseLeave={() => setHovered(false)}
+				className="mb-2 py-0 relative overflow-hidden transition-transform duration-300 ease-linear hover:cursor-pointer hover:-translate-y-1"
 			>
 				<div className="overflow-hidden">
 					<AspectRatio ratio={16 / 9}>
@@ -36,23 +30,15 @@ export function DatasetItem(props: { item: DatasetProps }) {
 							{props.item.price}
 						</small>
 					</div>
-					<div className="lg:h-10">
-						{hovered ? (
-							<Button className="w-full">Details</Button>
-						) : (
-							<div
-								className={`grid gap-2 grid-cols-2 lg:grid-cols-4 bg-neutral-200/30 p-2 rounded-2xl`}
-							>
-								<Badge variant={'outline'}>1 Files</Badge>
-								<Badge variant={'outline'}>10k+</Badge>
-								<Badge variant={'outline'} className="hidden md:block lg:block">
-									20 MB
-								</Badge>
-								<Badge variant={'outline'} className="hidden md:block lg:block">
-									CSV
-								</Badge>
-							</div>
-						)}
+					<div className="inline-flex gap-1">
+						<Badge variant={'outline'}>1 Files</Badge>
+						<Badge variant={'outline'}>10k+</Badge>
+						<Badge variant={'outline'} className="hidden md:block lg:block">
+							20 MB
+						</Badge>
+						<Badge variant={'outline'} className="hidden md:block lg:block">
+							CSV
+						</Badge>
 					</div>
 				</CardContent>
 			</Card>

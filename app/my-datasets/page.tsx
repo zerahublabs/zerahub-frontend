@@ -9,7 +9,7 @@ import React, { useMemo } from 'react';
 
 export function MyDatasets({ datasets }: { datasets: DatasetProps[] }) {
 	return (
-		<div className="flex flex-col gap-4 mt-4">
+		<div className="flex flex-col gap-4 mt-4 w-full">
 			<div className="flex justify-end">
 				<Link href={'/my-datasets/create'}>
 					<Button>Create Dataset</Button>

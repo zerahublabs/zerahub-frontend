@@ -1,4 +1,5 @@
 'use client';
+import FileExplorer from '@/components/block/files/explorer/explorer';
 import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
@@ -37,7 +38,7 @@ export default function Page() {
 							Stats
 						</TabsTrigger>
 					</TabsList>
-					<TabsContent value="overview" className='space-y-2'>
+					<TabsContent value="overview" className="space-y-2">
 						<Card>
 							<CardHeader>
 								<CardTitle>Summary</CardTitle>
@@ -98,7 +99,7 @@ export default function Page() {
 							</CardContent>
 						</Card>
 					</TabsContent>
-					<TabsContent value="explore" className='space-y-2'>
+					<TabsContent value="explore" className="space-y-2">
 						<Card>
 							<CardHeader>
 								<CardTitle>Columns Description</CardTitle>
@@ -119,9 +120,7 @@ export default function Page() {
 											{ name: 'Price', description: 'Price of the dataset' },
 										].map((item) => (
 											<TableRow key={item.name}>
-												<TableCell>
-													<Badge variant={'outline'}>{item.name}</Badge>
-												</TableCell>
+												<TableCell>{item.name}</TableCell>
 												<TableCell>{item.description}</TableCell>
 											</TableRow>
 										))}
@@ -197,8 +196,9 @@ export default function Page() {
 								</Table>
 							</CardContent>
 						</Card>
+						<FileExplorer />
 					</TabsContent>
-					<TabsContent value="stats" className='space-y-2'>
+					<TabsContent value="stats" className="space-y-2">
 						<Card>
 							<CardHeader>
 								<CardTitle>Payment Histories</CardTitle>
@@ -263,9 +263,11 @@ export default function Page() {
 								<h1 className="text-2xl font-bold">Wikipedia Datasets</h1>
 								<Separator />
 								<div className="flex flex-col gap-4">
-									<div className="inline-flex divide-x gap-4 items-center">
-										<h3 className="font-bold text-xl">0.001 ETH</h3>
-										<h4 className="text-muted-foreground">$130</h4>
+									<div className="inline-flex gap-4">
+										<div className="inline-flex gap-1">
+											<h3 className="font-bold text-xl text-primary">0.001</h3>
+											<small className="text-muted-foreground">ETH</small>
+										</div>
 									</div>
 									<div className={`flex flex-col gap-4 w-full p-2 rounded-2xl`}>
 										<div className="flex flex-col text-sm gap-1">

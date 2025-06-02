@@ -8,6 +8,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useEffect } from 'react';
 import { DatasetItem } from '@/components/ui/shadcn/dataset';
 import { useKeenSlider } from "keen-slider/react"
+import Link from 'next/link';
 
 export default function Home() {
 	const [keenSliderRef] = useKeenSlider({
@@ -80,7 +81,11 @@ export default function Home() {
 				</div>
 
 				{/* Dataset Cards Slider */}
-				<div className="w-full max-w-screen overflow-hidden">
+				<div className="w-full max-w-screen overflow-hidden space-y-4">
+					<div className="flex justify-between items-center">
+						<h3 className='font-medium leading-tight'>Tranding Datasets</h3>
+						<Link href={'#'} className='text-primary text-sm'>See All</Link>
+					</div>
 					<div ref={keenSliderRef} className="keen-slider">
 						{dataset_samples.slice(0, 10).map((item, i) => (
 							<div
