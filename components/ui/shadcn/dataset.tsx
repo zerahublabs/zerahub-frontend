@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardContent, CardTitle } from './card';
 import { AspectRatio } from './aspect-ratio';
 import Image from 'next/image';
@@ -29,7 +30,7 @@ export function DatasetSkeleton() {
 	);
 }
 
-export function DatasetItem(props: { item: Collection, url: string }) {
+export default function DatasetItem(props: { item: Collection, url: string }) {
 	return (
 		<Link href={props.url}>
 			<Card className="mb-2 py-0 relative overflow-hidden transition-transform duration-300 ease-linear hover:cursor-pointer hover:-translate-y-1">

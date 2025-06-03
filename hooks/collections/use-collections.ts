@@ -28,6 +28,7 @@ export function useUserCollections() {
 		async function fetchCollections() {
 			try {
 				const response = await fetch('/api/me/collections', {
+					cache: 'no-store',
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`,
@@ -71,6 +72,7 @@ export function useCollections() {
 		async function fetchCollections() {
 			try {
 				const response = await fetch('/api/collections', {
+					cache: 'no-store',
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`,
@@ -101,6 +103,49 @@ export function useCollections() {
 
 	return {
 		collections,
+		isLoading,
+	};
+}
+
+export function useCollectionDetails(collectionId: string) {
+	const [collection, setCollection] = useState<Collection>();
+	const [isLoading, setIsLoading] = useState(true);
+	const { token } = useAuthorization();
+
+	useEffect(() => {
+		async function fetchCollections() {
+			try {
+				const response = await fetch(`/api/collections/${collectionId}`, {
+					cache: 'no-store',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error('Failed to fetch collections');
+				}
+
+				const data = await response.json();
+				setCollection(data.data || []);
+			} catch (error) {
+				toast.error('Error fetching collections');
+				console.error('Error fetching collections:', error);
+			} finally {
+				setIsLoading(false);
+			}
+		}
+
+		if (token) {
+			fetchCollections();
+		} else {
+			setIsLoading(false);
+		}
+	}, [token, collectionId]);
+
+	return {
+		collection,
 		isLoading,
 	};
 }

@@ -1,10 +1,14 @@
-'use client'
+'use client';
 import React from 'react';
 import { Input } from './shadcn/input';
 import { Search } from 'lucide-react';
-import Wallet from '../block/wallet/wallet';
 import { ModeToggle } from './mode-toggle';
 import { SidebarTrigger } from './shadcn/sidebar';
+import dynamic from 'next/dynamic';
+
+const WalletComp = dynamic(() => import('@/components/block/wallet/wallet'), {
+	ssr: false
+});
 
 export function Header() {
 	return (
@@ -20,7 +24,7 @@ export function Header() {
 				</div>
 			</div>
 			<div className="flex gap-4">
-				<Wallet />
+				<WalletComp />
 				<ModeToggle />
 			</div>
 		</div>

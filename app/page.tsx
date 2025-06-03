@@ -3,21 +3,19 @@ import 'keen-slider/keen-slider.min.css';
 import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
 import Image from 'next/image';
 // import { dataset_samples } from '@/constants/datasets';
-import { DatasetItem, DatasetSkeleton } from '@/components/ui/shadcn/dataset';
 import { useKeenSlider } from 'keen-slider/react';
 import Link from 'next/link';
 import { useCollections } from '@/hooks/collections/use-collections';
+import dynamic from 'next/dynamic';
+import { DatasetSkeleton } from '@/components/ui/shadcn/dataset';
+
+const DatasetItemComp = dynamic(() => import('@/components/ui/shadcn/dataset'), {
+	ssr: false,
+	loading: () => <DatasetSkeleton />,
+});
 
 export default function Home() {
 	const { collections, isLoading } = useCollections();
-
-	// const [keenSliderRef] = useKeenSlider({
-	// 	slides: {
-	// 		perView: 'auto',
-	// 		spacing: 16,
-	// 	},
-	// 	mode: 'snap',
-	// });
 
 	const [keenSliderBannerRef] = useKeenSlider(
 		{
@@ -83,17 +81,11 @@ export default function Home() {
 						</Link>
 					</div>
 					<div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 auto-rows-fr">
-						{isLoading
-							? [0, 0, 0, 1, 1, 1, 1, 1].map((item, i) => (
-									<div key={i} className="w-full">
-										<DatasetSkeleton />
-									</div>
-								))
-							: collections.map((item, i) => (
-									<div key={i} className="w-full">
-										<DatasetItem item={item} url={`/collection/${item.id}`} />
-									</div>
-								))}
+						{collections.map((item, i) => (
+							<div key={i} className="w-full">
+								<DatasetItemComp item={item} url={`/collection/${item.id}`} />
+							</div>
+						))}
 					</div>
 					{/* <div ref={keenSliderRef} className="keen-slider">
 						{dataset_samples.slice(0, 10).map((item, i) => (
