@@ -1,11 +1,17 @@
 'use client';
 import { Button } from '@/components/ui/shadcn/button';
 import { Card, CardContent } from '@/components/ui/shadcn/card';
-import { DatasetItem, DatasetSkeleton } from '@/components/ui/shadcn/dataset';
+import { DatasetSkeleton } from '@/components/ui/shadcn/dataset';
 import { Collection, useUserCollections } from '@/hooks/collections/use-collections';
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+
+const DatasetItemComp = dynamic(() => import('@/components/ui/shadcn/dataset'), {
+	ssr: false,
+	loading: () => <DatasetSkeleton />,
+});
 
 export function MyDatasets(props: { collections: Collection[], isLoading: boolean }) {
 	const { collections, isLoading } = props;
@@ -44,7 +50,7 @@ export function MyDatasets(props: { collections: Collection[], isLoading: boolea
 						</div>
 					)) : collections.map((item, i) => (
 						<div key={i} className="w-full">
-							<DatasetItem item={item} />
+							<DatasetItemComp item={item} url={``} />
 						</div>
 					))
 				}

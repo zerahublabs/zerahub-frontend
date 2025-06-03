@@ -64,6 +64,7 @@ export function useAuthentication() {
 					const message = siweMessage?.prepareMessage()
 					const res = await fetch(`${BASE_URL_API}/auths`, {
 						method: 'post',
+						cache: 'no-store',
 						headers: {
 							"Content-Type": 'application/json'
 						},

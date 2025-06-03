@@ -12,6 +12,7 @@ export function useCreateCollection() {
 
 	const createCollectionhandler = useCallback(async () => {
 		const response = await fetch(`/api/collection`, {
+			cache: 'no-store',
 			method: 'post',
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -37,6 +38,7 @@ export function useCreateCollection() {
 
 		try {
 			const response = await fetch(`/api/collection/${collection?.['id']}/cover`, {
+				cache: 'no-store',
 				method: 'post',
 				headers: {
 					Authorization: `Bearer ${token}`,

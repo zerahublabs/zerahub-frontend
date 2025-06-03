@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode, Suspense, useMemo } from 'react';
 import { IconBrandTabler, IconDatabase, IconSettings } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/ui/header';
@@ -80,7 +80,9 @@ export default function AppProvider(props: { children: ReactNode }) {
 					<main className="flex-grow h-full overflow-y-hidden space-y-2 mb-2">
 						<div className="lg:pr-2 mx-auto h-full">
 							<Header />
-							{props.children}
+							<Suspense fallback={<p>Loading...</p>}>
+								{props.children}
+							</Suspense>
 
 							<Toaster />
 							<WelcomeSignProvider />

@@ -1,25 +1,21 @@
-'use client';
-import FileExplorer from '@/components/block/files/explorer/explorer';
+'use client'
 import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
+import { Card, CardContent} from '@/components/ui/shadcn/card';
 import { Separator } from '@/components/ui/shadcn/separator';
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from '@/components/ui/shadcn/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/shadcn/tabs';
 import { BarChart, Info, Rows } from 'lucide-react';
-import moment from 'moment';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React from 'react';
 
+const CollectionOverview = dynamic(() => import("@/components/pages/collection/overview"), { ssr: false })
+const CollectionExplore = dynamic(() => import("@/components/pages/collection/explore"), { ssr: false })
+const CollectionStats = dynamic(() => import("@/components/pages/collection/stats"), { ssr: false })
+
 export default function Page() {
+
 	return (
 		<div className="flex w-full flex-col-reverse lg:flex-row gap-4">
 			<div className="flex flex-col w-full gap-4">
@@ -39,204 +35,13 @@ export default function Page() {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="overview" className="space-y-2">
-						<Card>
-							<CardHeader>
-								<CardTitle>Summary</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-muted-foreground text-sm">
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-									id consequuntur hic possimus doloribus, nemo, error similique
-									nulla, illum ullam fuga eius tempore eum molestiae earum
-									distinctio? Voluptatem, dignissimos voluptatibus!
-								</p>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle>Dataset Summary</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="flex flex-col gap-4">
-									<div className="flex flex-col text-sm gap-1">
-										<small className="text-muted-foreground">Categories</small>{' '}
-										<div className="grid gap-2 grid-cols-6 rounded-2xl divide-x">
-											{[
-												'Wiki',
-												'Science',
-												'History',
-												'Data',
-												'AI',
-												'ML',
-												'NLP',
-												'Open Source',
-											].map((category) => (
-												<Badge
-													key={category}
-													variant={'outline'}
-													className="justify-center flex items-center w-full"
-												>
-													{category}
-												</Badge>
-											))}
-										</div>
-									</div>
-									<div className="flex flex-col text-sm gap-1">
-										<small className="text-muted-foreground">
-											Published At{' '}
-										</small>
-										{moment(new Date()).format('LLL')}
-									</div>
-									<div className="flex flex-col text-sm gap-1">
-										<small className="text-muted-foreground">Publisher</small>{' '}
-										<a href="#">0x0000...</a>
-									</div>
-									<div className="flex flex-col text-sm gap-1">
-										<small className="text-muted-foreground">License</small>{' '}
-										<a href="#">Free for Commercial Use</a>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
+						<CollectionOverview />
 					</TabsContent>
 					<TabsContent value="explore" className="space-y-2">
-						<Card>
-							<CardHeader>
-								<CardTitle>Columns Description</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<Table className="border">
-									<TableHeader>
-										<TableRow>
-											<TableHead>Column</TableHead>
-											<TableHead>Description</TableHead>
-										</TableRow>
-									</TableHeader>
-									<TableBody>
-										{[
-											{ name: 'Name', description: 'Name of the dataset' },
-											{ name: 'Size', description: 'Size of the dataset' },
-											{ name: 'Type', description: 'Type of the dataset' },
-											{ name: 'Price', description: 'Price of the dataset' },
-										].map((item) => (
-											<TableRow key={item.name}>
-												<TableCell>{item.name}</TableCell>
-												<TableCell>{item.description}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle>Dataset Files</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<Table className="border">
-									<TableHeader>
-										<TableRow>
-											<TableHead>File Name</TableHead>
-											<TableHead>Size</TableHead>
-											<TableHead>Type</TableHead>
-										</TableRow>
-									</TableHeader>
-									<TableBody>
-										{[
-											{
-												name: 'dataset.csv',
-												size: '20 MB',
-												type: 'CSV',
-											},
-											{
-												name: 'dataset.json',
-												size: '10 MB',
-												type: 'JSON',
-											},
-										].map((item) => (
-											<TableRow key={item.name}>
-												<TableCell>{item.name}</TableCell>
-												<TableCell>{item.size}</TableCell>
-												<TableCell>{item.type}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle>Samples</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<Table className="border">
-									<TableHeader>
-										<TableRow>
-											<TableHead>Sample</TableHead>
-											<TableHead>Value</TableHead>
-										</TableRow>
-									</TableHeader>
-									<TableBody>
-										{[
-											{
-												name: 'Sample 1',
-												value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-											},
-											{
-												name: 'Sample 2',
-												value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-											},
-										].map((item) => (
-											<TableRow key={item.name}>
-												<TableCell>{item.name}</TableCell>
-												<TableCell>{item.value}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</CardContent>
-						</Card>
-						<FileExplorer />
+						<CollectionExplore />
 					</TabsContent>
 					<TabsContent value="stats" className="space-y-2">
-						<Card>
-							<CardHeader>
-								<CardTitle>Payment Histories</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<Table className="border">
-									<TableHeader>
-										<TableRow>
-											<TableHead>Transaction ID</TableHead>
-											<TableHead>Amount</TableHead>
-											<TableHead>Date</TableHead>
-										</TableRow>
-									</TableHeader>
-									<TableBody>
-										{[
-											{
-												id: '0x0000...',
-												amount: '0.001 ETH',
-												date: new Date(),
-											},
-											{
-												id: '0x0001...',
-												amount: '0.002 ETH',
-												date: new Date(),
-											},
-										].map((item) => (
-											<TableRow key={item.id}>
-												<TableCell>{item.id}</TableCell>
-												<TableCell>{item.amount}</TableCell>
-												<TableCell>
-													{moment(item.date).format('LLL')}
-												</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</CardContent>
-						</Card>
+						<CollectionStats />
 					</TabsContent>
 				</Tabs>
 			</div>
