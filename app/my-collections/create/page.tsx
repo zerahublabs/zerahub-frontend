@@ -16,14 +16,12 @@ import { LoaderCircle, Save } from 'lucide-react';
 import { Textarea } from '@/components/ui/shadcn/textarea';
 import { useCreateCollection } from '@/hooks/collections/use-create-collection';
 import { useRef } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/shadcn/dialog';
 
 export default function Page() {
 	const {
 		name,
 		description,
 		isLoading,
-		isConfirmPushContract,
 		setCover,
 		setName,
 		setDescription,
@@ -83,24 +81,6 @@ export default function Page() {
 					</CardFooter>
 				</CardContent>
 			</Card>
-
-			<Dialog open={isConfirmPushContract}>
-				<DialogContent className='w-sm'>
-					<DialogHeader>
-						<DialogTitle>
-							Confirm Wallet
-						</DialogTitle>
-						<DialogDescription>
-							You are about to register your dataset collection to the smart contract. This action requires a wallet transaction. Please review and confirm the transaction in your wallet when prompted.
-						</DialogDescription>
-					</DialogHeader>
-					<DialogFooter>
-						<Button className='w-full'>
-							Confirm
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
 		</div>
 	);
 }

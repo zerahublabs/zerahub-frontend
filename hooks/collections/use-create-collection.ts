@@ -9,7 +9,6 @@ export function useCreateCollection() {
 	const [description, setDescription] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
 	const [collection, setCollection] = useState();
-	const [isConfirmPushContract, setIsConfirmPushContract ] = useState(true)
 
 	const createCollectionhandler = useCallback(async () => {
 		const response = await fetch(`/api/collection`, {
@@ -71,7 +70,6 @@ export function useCreateCollection() {
 				error: 'Error',
 			});
 
-			setIsConfirmPushContract(true)
 			setIsLoading(false);
 		},
 		[createCollectionhandler, uploadCoverCollectionHandler],
@@ -82,7 +80,6 @@ export function useCreateCollection() {
 		name,
 		description,
 		isLoading,
-		isConfirmPushContract,
 		setCover,
 		setName,
 		setDescription,
