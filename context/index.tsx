@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactNode, Suspense, useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { IconBrandTabler, IconDatabase, IconSettings } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/ui/header';
@@ -18,7 +18,6 @@ import {
 import Link from 'next/link';
 import { Toaster } from '@/components/ui/shadcn/sonner';
 import WelcomeSignProvider from '@/components/providers/welcome-sign-provider';
-import Loading from '@/app/loading';
 
 export function AppSidebar() {
 	const links = useMemo(
@@ -29,8 +28,8 @@ export function AppSidebar() {
 				icon: <IconBrandTabler className="h-5 w-5 shrink-0 text-card-foreground" />,
 			},
 			{
-				title: 'My Datasets',
-				href: '/my-datasets',
+				title: 'My Collections',
+				href: '/my-collections',
 				icon: <IconDatabase className="h-5 w-5 shrink-0 text-card-foreground" />,
 			},
 			{
@@ -81,7 +80,8 @@ export default function AppProvider(props: { children: ReactNode }) {
 					<main className="flex-grow h-full overflow-y-hidden space-y-2 mb-2">
 						<div className="lg:pr-2 mx-auto h-full">
 							<Header />
-							<Suspense fallback={<Loading />}>{props.children}</Suspense>
+							{props.children}
+
 							<Toaster />
 							<WelcomeSignProvider />
 						</div>

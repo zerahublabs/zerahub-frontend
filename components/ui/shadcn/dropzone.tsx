@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { AspectRatio } from './aspect-ratio';
 
-export default function Dropzone() {
+export default function Dropzone(props: { onAcceptFile: (file: File) => void }) {
 	const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
 		accept: {
 			'image/jpeg': ['.jpeg', '.png'],
@@ -15,8 +15,8 @@ export default function Dropzone() {
 
 	useEffect(() => {
 		if (acceptedFiles.length === 0) return;
-		console.log('Accepted files:', acceptedFiles[0]);
-	}, [acceptedFiles]);
+		props.onAcceptFile(acceptedFiles[0]);
+	}, [acceptedFiles, props]);
 
 	return (
 		<div

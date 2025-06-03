@@ -12,10 +12,23 @@ import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { Separator } from '@/components/ui/shadcn/separator';
 import Dropzone from '@/components/ui/shadcn/dropzone';
-import { Save } from 'lucide-react';
+import { LoaderCircle, Save } from 'lucide-react';
 import { Textarea } from '@/components/ui/shadcn/textarea';
+import { useCreateCollection } from '@/hooks/collections/use-create-collection';
+import { useRef } from 'react';
 
 export default function Page() {
+	const {
+		name,
+		description,
+		isLoading,
+		setCover,
+		setName,
+		setDescription,
+		onSubmitHandler,
+	} = useCreateCollection();
+	const formRef = useRef<HTMLFormElement>(null);
+
 	return (
 		<div className="flex flex-col w-full h-full gap-4">
 			<Card>
@@ -27,32 +40,42 @@ export default function Page() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex gap-6 flex-col justify-start items-center flex-1">
-					<form className="flex flex-col gap-6 w-full">
+					<form
+						ref={formRef}
+						onSubmit={onSubmitHandler}
+						className="flex flex-col gap-6 w-full"
+					>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="dataset-banner" className="text-sm font-semibold">
 								Dataset Banner
 							</Label>
-							<Dropzone />
+							<Dropzone onAcceptFile={setCover} />
 						</div>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="dataset-name" className="text-sm font-semibold">
 								Dataset Name
 							</Label>
-							<Input />
+							<Input value={name} onChange={(e) => setName(e.target.value)} />
 						</div>
 						<div className="flex flex-col gap-2 h-[100px]">
 							<Label htmlFor="dataset-name" className="text-sm font-semibold">
 								Description
 							</Label>
 							<Textarea
-								className='h-full'
+								className="h-full"
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
 							/>
 						</div>
 					</form>
 					<Separator />
 					<CardFooter className="w-full">
-						<Button className="w-full">
-							<Save />
+						<Button
+							onClick={() => formRef.current?.requestSubmit()}
+							disabled={isLoading}
+							className="w-full"
+						>
+							{isLoading ? <LoaderCircle className="animate-spin" /> : <Save />}
 							Create Dataset
 						</Button>
 					</CardFooter>
