@@ -46,7 +46,7 @@ export function OverviewSkeleton() {
 
 export default function Overview({ collection }: { collection?: Collection }) {
 	return (
-		<>
+		<div className='space-y-4'>
 			<Card>
 				<CardHeader>
 					<CardTitle>Summary</CardTitle>
@@ -91,12 +91,12 @@ export default function Overview({ collection }: { collection?: Collection }) {
 							{moment(collection?.createdAt).format('LL')}
 						</div>
 						<div className="flex flex-col text-sm gap-1">
-							<small className="text-muted-foreground">Publisher</small>{' '}
+							<small className="text-muted-foreground">Publisher</small>
 							<a href="#">{collection?.publisher}</a>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
-		</>
+		</div>
 	);
 }

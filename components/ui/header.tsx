@@ -12,10 +12,10 @@ const WalletComp = dynamic(() => import('@/components/block/wallet/wallet'), {
 
 export function Header() {
 	return (
-		<div className="w-full p-4 flex items-center justify-between rounded-xl">
-			<div className="flex space-x-4 items-center">
+		<div className="w-full p-4 gap-2 flex items-center justify-between rounded-xl">
+			<div className="flex gap-2 items-center">
 				<SidebarTrigger />
-				<div className="w-[400px] border rounded-xl flex items-center px-4 justify-center">
+				<div className="w-full lg:w-[400px] border rounded-xl flex items-center px-4 justify-center">
 					<Search size={20} />
 					<Input
 						placeholder="Search datasets..."
@@ -23,7 +23,7 @@ export function Header() {
 					/>
 				</div>
 			</div>
-			<div className="flex gap-4">
+			<div className="flex gap-2 lg:gap-4">
 				<WalletComp />
 				<ModeToggle />
 			</div>

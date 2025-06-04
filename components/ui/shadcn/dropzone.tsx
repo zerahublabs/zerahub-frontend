@@ -23,7 +23,7 @@ export default function Dropzone(props: { onAcceptFile: (file: File) => void }) 
 	return (
 		<div
 			{...getRootProps()}
-			className="flex flex-col realtive items-center w-[400px] h-[225px] justify-center border-2 border-dashed rounded-lg p-6 bg-slate-100/10 hover:bg-slate-100/20 transition-colors cursor-pointer"
+			className="flex flex-col realtive items-center w-full lg:w-[400px] h-[225px] justify-center border-2 border-dashed rounded-lg p-6 bg-slate-100/10 hover:bg-slate-100/20 transition-colors cursor-pointer"
 		>
 			<input {...getInputProps()} />
 			{acceptedFiles.length > 0 ? (

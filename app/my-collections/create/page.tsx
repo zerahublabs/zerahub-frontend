@@ -4,7 +4,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/shadcn/card';
@@ -18,20 +17,13 @@ import { useCreateCollection } from '@/hooks/collections/use-create-collection';
 import { useRef } from 'react';
 
 export default function Page() {
-	const {
-		name,
-		description,
-		isLoading,
-		setCover,
-		setName,
-		setDescription,
-		onSubmitHandler,
-	} = useCreateCollection();
+	const { name, description, isLoading, setCover, setName, setDescription, onSubmitHandler } =
+		useCreateCollection();
 	const formRef = useRef<HTMLFormElement>(null);
 
 	return (
-		<div className="flex flex-col w-full h-full gap-4">
-			<Card>
+		<div className="flex flex-col h-full justify-center mx-4 gap-4">
+			<Card className='w-full'>
 				<CardHeader>
 					<CardTitle>Publish your Collections</CardTitle>
 					<CardDescription>
@@ -39,7 +31,7 @@ export default function Page() {
 						dataset on the blockchain.
 					</CardDescription>
 				</CardHeader>
-				<CardContent className="flex gap-6 flex-col justify-start items-center flex-1">
+				<CardContent className="flex gap-4 flex-col justify-start items-center flex-1">
 					<form
 						ref={formRef}
 						onSubmit={onSubmitHandler}
@@ -69,16 +61,14 @@ export default function Page() {
 						</div>
 					</form>
 					<Separator />
-					<CardFooter className="w-full">
-						<Button
-							onClick={() => formRef.current?.requestSubmit()}
-							disabled={isLoading}
-							className="w-full"
-						>
-							{isLoading ? <LoaderCircle className="animate-spin" /> : <Save />}
-							Create Dataset
-						</Button>
-					</CardFooter>
+					<Button
+						onClick={() => formRef.current?.requestSubmit()}
+						disabled={isLoading}
+						className="w-full"
+					>
+						{isLoading ? <LoaderCircle className="animate-spin" /> : <Save />}
+						Create Dataset
+					</Button>
 				</CardContent>
 			</Card>
 		</div>

@@ -45,7 +45,7 @@ export function ExploreSkeleton() {
 
 export default function Explore() {
 	return (
-		<>
+		<div className="space-y-4">
 			<Card>
 				<CardHeader>
 					<CardTitle>Columns Description</CardTitle>
@@ -143,6 +143,6 @@ export default function Explore() {
 				</CardContent>
 			</Card>
 			<FileExplorer />
-		</>
+		</div>
 	);
 }

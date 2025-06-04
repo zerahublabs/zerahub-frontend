@@ -4,10 +4,9 @@ import { ExploreSkeleton } from '@/components/pages/collection/explore';
 import { OverviewSkeleton } from '@/components/pages/collection/overview';
 import { StatsSkeleton } from '@/components/pages/collection/stats';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { Badge } from '@/components/ui/shadcn/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/shadcn/tabs';
 import { useCollectionDetails } from '@/hooks/collections/use-collections';
-import { AlertCircleIcon, BarChart, Edit, Info, Rows } from 'lucide-react';
+import { AlertCircleIcon, BarChart, Info, Rows } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import React from 'react';
@@ -35,29 +34,23 @@ export default function Page() {
 	const { collection } = useCollectionDetails(params.id);
 
 	return (
-		<div className="flex w-full flex-col-reverse gap-4">
+		<div className="flex flex-col-reverse gap-4 mx-4">
 			<div className="flex flex-col w-full gap-4">
-				<Tabs defaultValue="overview">
-					<div className="flex gap-4 items-center justify-between w-full">
-						<TabsList>
-							<TabsTrigger value="overview">
-								<Info className="w-4 h-4 mr-1" />
-								Overview
-							</TabsTrigger>
-							<TabsTrigger value="explore">
-								<Rows className="w-4 h-4 mr-1" />
-								Explore
-							</TabsTrigger>
-							<TabsTrigger value="stats">
-								<BarChart className="w-4 h-4 mr-1" />
-								Stats
-							</TabsTrigger>
-						</TabsList>
-						<Badge variant={'default'}>
-							<Edit />
-							Edit Mode
-						</Badge>
-					</div>
+				<Tabs defaultValue="overview">s
+					<TabsList>
+						<TabsTrigger value="overview">
+							<Info className="w-4 h-4 mr-1" />
+							Overview
+						</TabsTrigger>
+						<TabsTrigger value="explore">
+							<Rows className="w-4 h-4 mr-1" />
+							Explore
+						</TabsTrigger>
+						<TabsTrigger value="stats">
+							<BarChart className="w-4 h-4 mr-1" />
+							Stats
+						</TabsTrigger>
+					</TabsList>
 					<TabsContent value="overview" className="space-y-2">
 						<CollectionOverview collection={collection} />
 					</TabsContent>

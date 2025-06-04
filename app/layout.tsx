@@ -27,7 +27,7 @@ export default async function RootLayout({
 
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={`${workSans.className} antialiased overscroll-none`}>
+			<body className={`${workSans.className} antialiased overscroll-x-none`}>
 				<ThemeProvider attribute={'class'} defaultTheme={'system'} enableSystem>
 					<WalletContextProvider cookies={cookies}>
 						<StoreProvider>

@@ -34,13 +34,13 @@ export function MyDatasets(props: { collections: Collection[]; isLoading: boolea
 	}
 
 	return (
-		<div className="flex flex-col gap-4 mt-4 w-full">
+		<div className="flex flex-col gap-4 mt-4 w-full mx-4">
 			<div className="flex justify-end">
 				<Link href={'/my-collections/create'}>
 					<Button>Create Dataset</Button>
 				</Link>
 			</div>
-			<div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 auto-rows-fr">
+			<div className="grid w-full grid-cols-1 lg:grid-cols-4 gap-2 auto-rows-fr justify-center">
 				{isLoading
 					? [0, 0, 0, 1, 1, 1, 1, 1].map((item, i) => (
 							<div key={i} className="w-full">
@@ -48,7 +48,7 @@ export function MyDatasets(props: { collections: Collection[]; isLoading: boolea
 							</div>
 						))
 					: collections.map((item, i) => (
-							<div key={i} className="w-full">
+							<div key={i} className="w-sm lg:w-full">
 								<DatasetItemComp item={item} url={`/my-collections/${item.id}`} />
 							</div>
 						))}

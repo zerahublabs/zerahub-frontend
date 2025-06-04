@@ -5,6 +5,7 @@ import {
 	Drawer,
 	DrawerContent,
 	DrawerDescription,
+	DrawerFooter,
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
@@ -20,36 +21,38 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/shadcn/alert-dialog';
-import { Separator } from '@/components/ui/shadcn/separator';
 import { useAppKitAccount, useDisconnect } from '@reown/appkit/react';
+import { useBalance } from 'wagmi';
+import { formatEther, zeroAddress } from 'viem';
+import { UserIcon } from 'lucide-react';
 
 export default function WalletAccount() {
 	const { isConnected, address } = useAppKitAccount();
+	const balance = useBalance({
+		address: zeroAddress
+	})
 	const { disconnect } = useDisconnect();
-	const username = "okegass"
+	const username = 'catdoom';
 
 	if (!isConnected) {
 		return null;
 	}
 
 	return (
-		<Drawer direction={'bottom'}>
+		<Drawer direction={'right'}>
 			<DrawerTrigger asChild>
-				<Button variant={'outline'}>
-					<div className="flex items-center gap-2">
-						<AvatarImage string={address} size={40} className="w-40 h-40" />
-						<span className="text-sm font-medium text-foreground">
-							{username || address?.substring(0, 8)}...
-						</span>
+				<Button variant={'outline'} size={'icon'}>
+					<div className="flex items-center">
+						<UserIcon />
 					</div>
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl w-1/2 flex flex-col gap-4 justify-between pb-2 px-2">
+			<DrawerContent className="rounded-tl-2xl rounded-bl-2xl gap-4 px-2">
 				<DrawerHeader>
 					<DrawerTitle>Account</DrawerTitle>
 					<DrawerDescription>Manage your wallet account and settings.</DrawerDescription>
 				</DrawerHeader>
-				<div className="flex flex-col gap-4 shrink-0">
+				<div className="flex flex-col gap-4">
 					<div className="flex items-center justify-between px-4 pb-2">
 						<div className="inline-flex items-center gap-4">
 							<AvatarImage string={address} size={40} />
@@ -57,18 +60,17 @@ export default function WalletAccount() {
 								<p className="font-semibold text-foreground">
 									{username || address?.substring(0, 8)}...
 								</p>
-								<p className="text-sm text-muted-foreground">1 ETH</p>
+								<p className="text-sm text-muted-foreground">{formatEther(BigInt(balance.data?.value.toString() ?? "0"), 'wei')} ETH</p>
 							</div>
 						</div>
 						<Badge>Connected</Badge>
 					</div>
-					<Separator orientation={'vertical'} />
 					<div className="flex items-center justify-between px-4">
 						<p className="text-sm text-muted-foreground">Network</p>
 						<Badge variant={'outline'}>Ethereum</Badge>
 					</div>
 				</div>
-				<div className="px-4 pb-4">
+				<DrawerFooter>
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
 							<Button variant={'default'} className="w-full">
@@ -87,7 +89,7 @@ export default function WalletAccount() {
 							</AlertDialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
-				</div>
+				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
 	);
