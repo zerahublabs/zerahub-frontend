@@ -84,8 +84,8 @@ export default function AppProvider(props: { children: ReactNode }) {
 								{props.children}
 							</Suspense>
 
-							<Toaster />
 							<WelcomeSignProvider />
+							<Toaster />
 						</div>
 					</main>
 				</div>

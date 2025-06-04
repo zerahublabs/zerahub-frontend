@@ -36,12 +36,14 @@ export default function DatasetItem(props: { item: Collection, url: string }) {
 			<Card className="mb-2 py-0 relative overflow-hidden transition-transform duration-300 ease-linear hover:cursor-pointer hover:-translate-y-1">
 				<div className="overflow-hidden">
 					<AspectRatio ratio={16 / 9}>
-						<Image
-							fill
-							src={`https://dummyimage.com/600x400/000/fff&text=${props.item.title}`}
-							className="rounded-t-xl"
-							alt="Random Dataset Cover"
-						/>
+						{props.item.cover !== null && (
+							<Image
+								fill
+								src={`/static/${props.item.cover.filename}`}
+								className="rounded-t-xl"
+								alt="Random Dataset Cover"
+							/>
+						)}
 					</AspectRatio>
 				</div>
 				<CardContent className="flex flex-col gap-4 mb-4 shrink-0">

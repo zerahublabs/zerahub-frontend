@@ -2,16 +2,22 @@ import { FormEvent, useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import { useAuthorization } from '../use-auth';
 
+interface CollectionData {
+	id: string;
+	title: string;
+	description: string;
+	price: number;
+}
+
 export function useCreateCollection() {
 	const { token } = useAuthorization();
 	const [cover, setCover] = useState<File>();
-	const [name, setName] = useState<string>();
-	const [description, setDescription] = useState<string>();
+	const [name, setName] = useState('');
+	const [description, setDescription] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [collection, setCollection] = useState();
 
 	const createCollectionhandler = useCallback(async () => {
-		const response = await fetch(`/api/collection`, {
+		const response = await fetch(`/api/me/collections`, {
 			cache: 'no-store',
 			method: 'post',
 			headers: {
@@ -26,18 +32,20 @@ export function useCreateCollection() {
 
 		const responseJson = await response.json();
 		if (response.status == 200) {
-			setCollection(responseJson['data']);
+			return responseJson['data'] as CollectionData;
 		} else {
 			throw Error();
 		}
 	}, [name, description, token]);
 
-	const uploadCoverCollectionHandler = useCallback(async () => {
+	const uploadCoverCollectionHandler = useCallback(async (collectionId: string) => {
+		if (!cover) return;
+
 		const formData = new FormData();
-		formData.append('file', cover as File);
+		formData.append('file', cover);
 
 		try {
-			const response = await fetch(`/api/collection/${collection?.['id']}/cover`, {
+			const response = await fetch(`/api/me/collections/${collectionId}/cover`, {
 				cache: 'no-store',
 				method: 'post',
 				headers: {
@@ -47,34 +55,47 @@ export function useCreateCollection() {
 			});
 			await response.json();
 		} catch (error) {
-			console.error(error)
+			console.error(error);
+			throw error;
 		}
-	}, [cover, collection, token]);
+	}, [cover, token]);
 
 	const pushCollectionToContract = useCallback(() => {
 
 	}, [])
 
 	const onSubmitHandler = useCallback(
-		(e: FormEvent) => {
+		async (e: FormEvent) => {
 			e.preventDefault();
-
 			setIsLoading(true);
-			toast.promise(createCollectionhandler, {
-				success: 'Dataset submited',
-				loading: 'Submit a dataset data',
-				error: 'Error',
-			});
 
-			toast.promise(uploadCoverCollectionHandler, {
-				success: 'Uploading dataset cover',
-				loading: 'Cover uploaded',
-				error: 'Error',
-			});
+			try {
+				// First create the collection
+				const createPromise = createCollectionhandler();
+				toast.promise(createPromise, {
+					loading: 'Creating dataset...',
+					success: 'Dataset created successfully',
+					error: 'Failed to create dataset',
+				});
 
-			setIsLoading(false);
+				const collectionData = await createPromise;
+
+				// Then upload the cover if we have one
+				if (cover && collectionData.id) {
+					const uploadPromise = uploadCoverCollectionHandler(collectionData.id);
+					toast.promise(uploadPromise, {
+						loading: 'Uploading cover image...',
+						success: 'Cover image uploaded successfully',
+						error: 'Failed to upload cover image',
+					});
+				}
+			} catch (error) {
+				console.error('Error creating collection:', error);
+			} finally {
+				setIsLoading(false);
+			}
 		},
-		[createCollectionhandler, uploadCoverCollectionHandler],
+		[createCollectionhandler, uploadCoverCollectionHandler, cover],
 	);
 
 	return {

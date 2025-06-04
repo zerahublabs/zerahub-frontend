@@ -1,33 +1,81 @@
 import { BASE_URL_API } from '@/constants';
-import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react';
+import { useUser } from '@/lib/features/user/hooks';
+import { useAppKitAccount, useAppKitEvents, useAppKitNetwork } from '@reown/appkit/react';
 import { useLocalStorageState } from 'ahooks';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SiweMessage } from 'siwe';
 import { useSignMessage } from 'wagmi';
 
-export function useAuthorization() {
-	const { isConnected } = useAppKitAccount();
+export interface UserProfile {
+	id: string;
+	username: string;
+	address: string;
+}
 
+export function useAuthorization() {
+	const router = useRouter();
+	const { isConnected, status } = useAppKitAccount();
+	const { data: event } = useAppKitEvents();
 	const [isLogged, setIsLogged] = useState(false);
+	const [profile, setProfile] = useState();
 	const [token, setToken] = useLocalStorageState('token', {
 		defaultValue: '',
 	});
 
+	const { login } = useUser();
+
+	const onFetchUser = useCallback(async () => {
+		const response = await fetch('/api/me/profile', {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		const responseJson = await response.json();
+		if (responseJson.status == 'ok') {
+			login(responseJson.data.username, responseJson.data.address);
+			setProfile(responseJson.data);
+			setIsLogged(true);
+		} else {
+			if (responseJson.message === 'Unauthorized') {
+				setIsLogged(false);
+			}
+		}
+	}, [token, login]);
+
+	useEffect(() => {
+		if (status === 'disconnected' && !isConnected) {
+			router.push('/login');
+		}
+	}, [status, isConnected, router, token]);
+
 	useEffect(() => {
 		if (isConnected && token) {
-			setIsLogged(true);
+			(async () => {
+				onFetchUser();
+			})();
 		}
-	}, [isConnected, token]);
+	}, [isConnected, token, onFetchUser]);
+
+	useEffect(() => {
+		if (event.event == 'DISCONNECT_SUCCESS') {
+			setIsLogged(false);
+			setToken('');
+		}
+	}, [event, setToken]);
 
 	return {
 		token,
 		isLogged,
-		setToken
+		profile,
+		setToken,
 	};
 }
 
 export function useAuthentication() {
-	const { token, setToken } = useAuthorization()
+	const { token, isLogged, setToken } = useAuthorization();
 	const { isConnected, address } = useAppKitAccount();
 	const { chainId } = useAppKitNetwork();
 	const { signMessage, data: signatureData } = useSignMessage();
@@ -52,41 +100,41 @@ export function useAuthentication() {
 	}, [isConnected, address, chainId]);
 
 	useEffect(() => {
-		if (isConnected && !token) {
-				setIsSignIn(true);
+		if (isConnected && !token && !isLogged) {
+			setIsSignIn(true);
 		}
-	}, [isConnected, token]);
+	}, [isConnected, token, isLogged]);
 
 	useEffect(() => {
 		if (signatureData) {
-			(async() => {
+			(async () => {
 				try {
-					const message = siweMessage?.prepareMessage()
+					const message = siweMessage?.prepareMessage();
 					const res = await fetch(`${BASE_URL_API}/auths`, {
 						method: 'post',
 						cache: 'no-store',
 						headers: {
-							"Content-Type": 'application/json'
+							'Content-Type': 'application/json',
 						},
 						body: JSON.stringify({
 							signature: signatureData,
-							message: message
-						})
-					})
-					const json = await res.json()
+							message: message,
+						}),
+					});
+					const json = await res.json();
 
-					const access_token = json['data']['access_token']
-					setToken(access_token)
-					setIsSignIn(false)
+					const access_token = json['data']['access_token'];
+					setToken(access_token);
+					setIsSignIn(false);
 				} catch (err) {
 					if (err instanceof Error) {
-						console.log(err.message)
+						console.log(err.message);
 					}
 				}
-				setIsLoading(false)
-			})()
+				setIsLoading(false);
+			})();
 		}
-	}, [signatureData, siweMessage, setToken])
+	}, [signatureData, siweMessage, setToken]);
 
 	const onSignInHandler = useCallback(async () => {
 		setIsLoading(true);

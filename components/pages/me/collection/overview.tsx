@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
+import { Collection } from '@/hooks/collections/use-collections';
 import moment from 'moment';
 import React from 'react';
 
@@ -43,7 +44,7 @@ export function OverviewSkeleton() {
 	);
 }
 
-export default function Overview() {
+export default function Overview({ collection }: { collection?: Collection }) {
 	return (
 		<>
 			<Card>
@@ -52,10 +53,7 @@ export default function Overview() {
 				</CardHeader>
 				<CardContent>
 					<p className="text-muted-foreground text-sm">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa id
-						consequuntur hic possimus doloribus, nemo, error similique nulla, illum
-						ullam fuga eius tempore eum molestiae earum distinctio? Voluptatem,
-						dignissimos voluptatibus!
+						{collection?.description}
 					</p>
 				</CardContent>
 			</Card>
@@ -90,11 +88,11 @@ export default function Overview() {
 						</div>
 						<div className="flex flex-col text-sm gap-1">
 							<small className="text-muted-foreground">Published At </small>
-							{moment(new Date()).format('LLL')}
+							{moment(collection?.createdAt).format('LL')}
 						</div>
 						<div className="flex flex-col text-sm gap-1">
 							<small className="text-muted-foreground">Publisher</small>{' '}
-							<a href="#">0x0000...</a>
+							<a href="#">{collection?.publisher}</a>
 						</div>
 					</div>
 				</CardContent>

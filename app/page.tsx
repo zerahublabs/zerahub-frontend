@@ -15,7 +15,7 @@ const DatasetItemComp = dynamic(() => import('@/components/ui/shadcn/dataset'), 
 });
 
 export default function Home() {
-	const { collections, isLoading } = useCollections();
+	const { collections } = useCollections();
 
 	const [keenSliderBannerRef] = useKeenSlider(
 		{

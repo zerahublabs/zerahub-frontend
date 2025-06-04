@@ -8,15 +8,16 @@ export interface Collection {
 	title: string;
 	description: string;
 	price: 0;
-	cover: null;
+	cover: {
+		filename: string;
+	};
+	transactionHash: string | null;
+	status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'SUSPENDED';
 	isDeleted: false;
 	createdAt: string;
 	updatedAt: string;
 	deletedAt: null;
-	user: {
-		id: string;
-		address: string;
-	};
+	publisher: string
 }
 
 export function useUserCollections() {
@@ -110,7 +111,6 @@ export function useCollections() {
 export function useCollectionDetails(collectionId: string) {
 	const [collection, setCollection] = useState<Collection>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { token } = useAuthorization();
 
 	useEffect(() => {
 		async function fetchCollections() {
@@ -119,7 +119,6 @@ export function useCollectionDetails(collectionId: string) {
 					cache: 'no-store',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
 					},
 				});
 
@@ -128,6 +127,7 @@ export function useCollectionDetails(collectionId: string) {
 				}
 
 				const data = await response.json();
+				console.log(data);
 				setCollection(data.data || []);
 			} catch (error) {
 				toast.error('Error fetching collections');
@@ -137,12 +137,8 @@ export function useCollectionDetails(collectionId: string) {
 			}
 		}
 
-		if (token) {
-			fetchCollections();
-		} else {
-			setIsLoading(false);
-		}
-	}, [token, collectionId]);
+		fetchCollections();
+	}, [collectionId]);
 
 	return {
 		collection,

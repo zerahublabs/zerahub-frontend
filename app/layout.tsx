@@ -5,6 +5,7 @@ import WalletContextProvider from '@/context/wallet';
 import { headers } from 'next/headers';
 import AppProvider from '@/context';
 import { ThemeProvider } from 'next-themes';
+import StoreProvider from '@/components/providers/store-provider';
 
 const workSans = Work_Sans({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -27,9 +28,11 @@ export default async function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${workSans.className} antialiased overscroll-none`}>
-				<ThemeProvider attribute={"class"} defaultTheme={"system"} enableSystem>
+				<ThemeProvider attribute={'class'} defaultTheme={'system'} enableSystem>
 					<WalletContextProvider cookies={cookies}>
-						<AppProvider>{children}</AppProvider>
+						<StoreProvider>
+								<AppProvider>{children}</AppProvider>
+						</StoreProvider>
 					</WalletContextProvider>
 				</ThemeProvider>
 			</body>

@@ -33,7 +33,7 @@ export default function Page() {
 		<div className="flex flex-col w-full h-full gap-4">
 			<Card>
 				<CardHeader>
-					<CardTitle>Publish your Datasets</CardTitle>
+					<CardTitle>Publish your Collections</CardTitle>
 					<CardDescription>
 						Fill in the dataset information below. This will be used to create the
 						dataset on the blockchain.

@@ -1,0 +1,110 @@
+import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
+import { Card, CardContent } from '@/components/ui/shadcn/card';
+import { Separator } from '@/components/ui/shadcn/separator';
+import { Skeleton } from '@/components/ui/shadcn/skeleton';
+import { useCollectionDetails } from '@/hooks/collections/use-collections';
+import Image from 'next/image';
+import React from 'react';
+
+export function DetailsSkeleton() {
+	return (
+		<Card className="w-full lg:w-[300px]">
+			<CardContent>
+				<div className="flex flex-col gap-6">
+					<div className="overflow-hidden">
+						<AspectRatio ratio={16 / 9}>
+							<Skeleton className="w-full h-full" />
+						</AspectRatio>
+					</div>
+					<div className="flex flex-col w-full gap-4">
+						<Skeleton className="w-full h-12" />
+						<Separator />
+						<div className="flex flex-col gap-4">
+							<div className="inline-flex gap-4">
+								<div className="inline-flex gap-1">
+									<Skeleton className="w-full h-8" />
+								</div>
+							</div>
+							<div className={`flex flex-col gap-4 w-full p-2 rounded-2xl`}>
+								<div className="flex flex-col text-sm gap-1">
+									<Skeleton className="w-full h-4" />
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<Skeleton className="w-full h-4" />
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<Skeleton className="w-full h-4" />
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<Skeleton className="w-full h-4" />
+								</div>
+							</div>
+							<Skeleton className="w-full h-full" />
+						</div>
+					</div>
+				</div>
+			</CardContent>
+		</Card>
+	);
+}
+
+export default function Details(props: { slug: string }) {
+	const { collection } = useCollectionDetails(props.slug);
+
+	return (
+		<Card className="w-full lg:w-[300px]">
+			<CardContent>
+				<div className="flex flex-col gap-6">
+					<div className="overflow-hidden">
+						<AspectRatio ratio={16 / 9}>
+							<Badge className="absolute top-2 left-2 z-10" variant="default">
+								Purchased
+							</Badge>
+							<Image
+								src={`/static/${collection?.cover.filename}`}
+								alt="Gambar"
+								fill
+								className="rounded-xl object-cover"
+							/>
+						</AspectRatio>
+					</div>
+					<div className="flex flex-col w-full gap-4">
+						<h1 className="text-2xl font-bold">{collection?.title}</h1>
+						<Separator />
+						<div className="flex flex-col gap-4">
+							<div className="inline-flex gap-4">
+								<div className="inline-flex gap-1">
+									<h3 className="font-bold text-xl text-primary">0.001</h3>
+									<small className="text-muted-foreground">ETH</small>
+								</div>
+							</div>
+							<div className={`flex flex-col gap-4 w-full p-2 rounded-2xl`}>
+								<div className="flex flex-col text-sm gap-1">
+									<small className="text-muted-foreground">Total Files</small>1
+									Files
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<small className="text-muted-foreground">Total Rows</small>
+									10k+
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<small className="text-muted-foreground">Size of File</small>
+									20 MB
+								</div>
+								<div className="flex flex-col text-sm gap-1">
+									<small className="text-muted-foreground">Type</small>
+									Tabular
+								</div>
+							</div>
+							<Button disabled>
+								Publish Datasets
+							</Button>
+						</div>
+					</div>
+				</div>
+			</CardContent>
+		</Card>
+	);
+}
