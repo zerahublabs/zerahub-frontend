@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
-import { Collection } from '@/hooks/collections/use-collections';
+import { useCollection } from '@/lib/features/collection/hooks';
 import { Edit } from 'lucide-react';
 import moment from 'moment';
 import React from 'react';
@@ -46,7 +46,9 @@ export function OverviewSkeleton() {
 	);
 }
 
-export default function Overview({ collection }: { collection?: Collection }) {
+export default function Overview() {
+	const { collection } = useCollection()
+
 	return (
 		<div className="space-y-4">
 			<Card>

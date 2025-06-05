@@ -38,31 +38,32 @@ export function useCreateCollection() {
 		}
 	}, [name, description, token]);
 
-	const uploadCoverCollectionHandler = useCallback(async (collectionId: string) => {
-		if (!cover) return;
+	const uploadCoverCollectionHandler = useCallback(
+		async (collectionId: string) => {
+			if (!cover) return;
 
-		const formData = new FormData();
-		formData.append('file', cover);
+			const formData = new FormData();
+			formData.append('file', cover);
 
-		try {
-			const response = await fetch(`/api/me/collections/${collectionId}/cover`, {
-				cache: 'no-store',
-				method: 'post',
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-				body: formData,
-			});
-			await response.json();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
-	}, [cover, token]);
+			try {
+				const response = await fetch(`/api/me/collections/${collectionId}/cover`, {
+					cache: 'no-store',
+					method: 'post',
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					body: formData,
+				});
+				await response.json();
+			} catch (error) {
+				console.error(error);
+				throw error;
+			}
+		},
+		[cover, token],
+	);
 
-	const pushCollectionToContract = useCallback(() => {
-
-	}, [])
+	const pushCollectionToContract = useCallback(() => {}, []);
 
 	const onSubmitHandler = useCallback(
 		async (e: FormEvent) => {
@@ -107,6 +108,6 @@ export function useCreateCollection() {
 		setName,
 		setDescription,
 		onSubmitHandler,
-		pushCollectionToContract
+		pushCollectionToContract,
 	};
 }

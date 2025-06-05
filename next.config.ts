@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const API_BASE_URL = process.env.NODE_ENV == "production" ? process.env.API_BASE_URL : "http://localhost:3001"
+
 const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
@@ -22,11 +24,11 @@ const nextConfig: NextConfig = {
 		return [
 			{
 				source: '/api/:path*',
-				destination: 'http://localhost:3001/:path*',
+				destination: `${API_BASE_URL}/:path*`,
 			},
 			{
 				source: '/static/:path*',
-				destination: 'http://localhost:3001/static/:path*'
+				destination: `${API_BASE_URL}/static/:path*`
 			}
 		];
 	},

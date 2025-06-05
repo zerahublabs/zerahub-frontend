@@ -1,10 +1,11 @@
 import { useCallback, useEffect } from 'react';
 import { useWriteContract } from 'wagmi';
-import { Collection } from './use-collections';
 import { ZERAHUB_CONTRACTS } from '@/constants';
 import { toast } from 'sonner';
+import { useCollection } from '@/lib/features/collection/hooks';
 
-export function useSignCollection(collection?: Collection) {
+export function useSignCollection() {
+	const { collection } = useCollection()
 	const { isPending, data, writeContractAsync } = useWriteContract();
 
 	useEffect(() => {

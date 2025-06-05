@@ -5,12 +5,12 @@ import { Card, CardContent } from '@/components/ui/shadcn/card';
 import { Separator } from '@/components/ui/shadcn/separator';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/shadcn/tooltip';
-import { Collection } from '@/hooks/collections/use-collections';
-import { useSignCollection } from '@/hooks/collections/use-sign-collection';
-import { ClipboardIcon, LoaderCircle, Upload } from 'lucide-react';
+import { ClipboardIcon } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
-import EditCollectionAction from './action/edit-collection';
+import { useCollection } from '@/lib/features/collection/hooks';
+import UpdateCollectionAction from './action/update-collection';
+import UpdateCoverCollection from './action/update-cover';
+import SignCollectionAction from './action/sign-collection';
 
 export function DetailsSkeleton() {
 	return (
@@ -54,16 +54,11 @@ export function DetailsSkeleton() {
 	);
 }
 
-export function DetailsAction({ collection }: { collection?: Collection }) {
-	const { isPending: isSignCollectionPending, onSignHandler } = useSignCollection(collection);
+export function DetailsAction() {
+	const { collection } = useCollection();
 
 	if (collection?.transactionHash == null) {
-		return (
-			<Button disabled={isSignCollectionPending} onClick={onSignHandler}>
-				{isSignCollectionPending ? <LoaderCircle className="animate-spin" /> : <Upload />}
-				Sign Contract
-			</Button>
-		);
+		return <SignCollectionAction />;
 	} else if (collection.transactionHash && collection.status === 'DRAFT') {
 		return <Button disabled>Publish Now</Button>;
 	} else {
@@ -71,26 +66,29 @@ export function DetailsAction({ collection }: { collection?: Collection }) {
 	}
 }
 
-export default function Details({ collection }: { collection?: Collection }) {
+export default function Details() {
+	const { collection } = useCollection();
+
 	return (
 		<Card className="w-full">
 			<CardContent>
 				<div className="flex flex-col lg:flex-row gap-6 items-center">
 					<div className="overflow-hidden w-full h-full">
-						<AspectRatio ratio={16 / 9}>
+						<AspectRatio ratio={16 / 9} className="group">
 							<Image
 								src={`/static/${collection?.cover.filename}`}
 								alt="Gambar"
 								fill
 								className="rounded-xl object-cover"
 							/>
+							<UpdateCoverCollection />
 						</AspectRatio>
 					</div>
 					<div className="flex flex-col w-full gap-4">
 						<div className="flex flex-col gap-2">
 							<div className="inline-flex w-full items-center justify-between gap-2">
 								<h1 className="text-2xl font-bold flex-1">{collection?.title}</h1>
-								<EditCollectionAction />
+								<UpdateCollectionAction />
 							</div>
 							<p className="text-muted-foreground text-sm">
 								{collection?.description}
@@ -145,7 +143,7 @@ export default function Details({ collection }: { collection?: Collection }) {
 									)}
 								</div>
 							</div>
-							<DetailsAction collection={collection} />
+							<DetailsAction />
 						</div>
 					</div>
 				</div>

@@ -29,8 +29,7 @@ const CollectionDetails = dynamic(() => import('@/components/pages/me/collection
 
 export default function Page() {
 	const params = useParams<{ id: string }>();
-
-	const { collection } = useCollectionDetails(params.id);
+	useCollectionDetails(params.id)
 
 	return (
 		<div className="flex flex-col-reverse gap-4 mx-4">
@@ -55,7 +54,7 @@ export default function Page() {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="overview" className="space-y-2">
-						<CollectionOverview collection={collection} />
+						<CollectionOverview />
 					</TabsContent>
 					<TabsContent value="explore" className="space-y-2">
 						<CollectionExplore />
@@ -66,7 +65,7 @@ export default function Page() {
 				</Tabs>
 			</div>
 			<div className="lg:sticky top-4 self-start flex flex-col gap-4 w-full">
-				<CollectionDetails collection={collection} />
+				<CollectionDetails />
 			</div>
 		</div>
 	);

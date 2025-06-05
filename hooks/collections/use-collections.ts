@@ -1,24 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuthorization } from '../use-auth';
 import { toast } from 'sonner';
-
-export interface Collection {
-	id: string;
-	userId: string;
-	title: string;
-	description: string;
-	price: 0;
-	cover: {
-		filename: string;
-	};
-	transactionHash: string | null;
-	status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'SUSPENDED';
-	isDeleted: false;
-	createdAt: string;
-	updatedAt: string;
-	deletedAt: null;
-	publisher: string
-}
+import { useCollection } from '@/lib/features/collection/hooks';
+import { Collection } from '@/lib/features/collection/slice';
 
 export function useUserCollections() {
 	const [collections, setCollections] = useState<Collection[]>([]);
@@ -109,7 +93,7 @@ export function useCollections() {
 }
 
 export function useCollectionDetails(collectionId: string) {
-	const [collection, setCollection] = useState<Collection>();
+	const { setCollection } = useCollection();
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -127,21 +111,19 @@ export function useCollectionDetails(collectionId: string) {
 				}
 
 				const data = await response.json();
-				console.log(data);
-				setCollection(data.data || []);
+				setCollection(data.data);
+				setIsLoading(false);
 			} catch (error) {
 				toast.error('Error fetching collections');
 				console.error('Error fetching collections:', error);
-			} finally {
 				setIsLoading(false);
 			}
 		}
 
 		fetchCollections();
-	}, [collectionId]);
+	}, [collectionId, setCollection]);
 
 	return {
-		collection,
 		isLoading,
 	};
 }
