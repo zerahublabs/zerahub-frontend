@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Badge } from './badge';
 import Link from 'next/link';
 import { Skeleton } from './skeleton';
-import { Collection } from '@/hooks/collections/use-collections';
+import { type Collection } from '@/lib/features/collection/slice';
 
 export function DatasetSkeleton() {
 	return (

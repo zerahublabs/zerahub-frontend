@@ -59,7 +59,7 @@ export default function Page() {
 				</Tabs>
 			</div>
 			<div className="lg:sticky top-4 self-start flex flex-col gap-4 w-full lg:w-[300px]">
-				<CollectionDetails slug={params.id} mode='view' />
+				<CollectionDetails slug={params.id} />
 			</div>
 		</div>
 	);

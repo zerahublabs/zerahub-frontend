@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/shadcn/card';
 import { Separator } from '@/components/ui/shadcn/separator';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import { useCollectionDetails } from '@/hooks/collections/use-collections';
+import { useCollection } from '@/lib/features/collection/hooks';
 import Image from 'next/image';
 import React from 'react';
 
@@ -51,7 +52,9 @@ export function DetailsSkeleton() {
 }
 
 export default function Details(props: { slug: string }) {
-	const { collection } = useCollectionDetails(props.slug);
+	useCollectionDetails(props.slug);
+
+	const { collection } = useCollection()
 
 	return (
 		<Card className="w-full lg:w-[300px]">

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface Collection {
+export type Collection = {
 	id: string;
 	userId: string;
 	title: string;
@@ -16,7 +16,7 @@ export interface Collection {
 	updatedAt: string;
 	deletedAt: null;
 	publisher: string;
-}
+};
 
 const initialState: Collection = {
 	id: '',
