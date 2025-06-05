@@ -7,9 +7,10 @@ import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/shadcn/tooltip';
 import { Collection } from '@/hooks/collections/use-collections';
 import { useSignCollection } from '@/hooks/collections/use-sign-collection';
-import { ClipboardIcon, LoaderCircle, Pencil, Upload } from 'lucide-react';
+import { ClipboardIcon, LoaderCircle, Upload } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
+import EditCollectionAction from './action/edit-collection';
 
 export function DetailsSkeleton() {
 	return (
@@ -86,11 +87,14 @@ export default function Details({ collection }: { collection?: Collection }) {
 						</AspectRatio>
 					</div>
 					<div className="flex flex-col w-full gap-4">
-						<div className="flex w-full flex-row items-center justify-between gap-2">
-							<h1 className="text-2xl font-bold">{collection?.title}</h1>
-							<Button variant={'link'}>
-								<Pencil className="size-3" />
-							</Button>
+						<div className="flex flex-col gap-2">
+							<div className="inline-flex w-full items-center justify-between gap-2">
+								<h1 className="text-2xl font-bold flex-1">{collection?.title}</h1>
+								<EditCollectionAction />
+							</div>
+							<p className="text-muted-foreground text-sm">
+								{collection?.description}
+							</p>
 						</div>
 						<Separator />
 						<div className="flex flex-col gap-4">

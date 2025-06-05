@@ -70,7 +70,7 @@
   --destructive-foreground: #ede9e8;
   --border: #292929;
   --input: #242424;
-  --ring: var(--primary);
+  --ring: #242424;
   --chart-1: #4ade80;
   --chart-2: #60a5fa;
   --chart-3: #a78bfa;
@@ -83,7 +83,7 @@
   --sidebar-accent: #313131;
   --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #292929;
-  --sidebar-ring: #4ade80;
+  --sidebar-ring: #242424;
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: monospace;

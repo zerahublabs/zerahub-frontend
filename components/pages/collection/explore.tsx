@@ -1,4 +1,4 @@
-import FileExplorer from '@/components/block/files/explorer/explorer';
+import FileExplorer from '@/components/pages/me/collection/files/explorer/explorer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import {

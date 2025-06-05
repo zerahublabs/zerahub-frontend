@@ -20,7 +20,7 @@ export default function Home() {
 	const [keenSliderBannerRef] = useKeenSlider(
 		{
 			slides: {
-				perView: 'auto',
+				perView: 1,
 			},
 			loop: true,
 		},
@@ -49,7 +49,7 @@ export default function Home() {
 			<div className="flex w-full flex-col gap-6">
 				<div className="keen-slider" ref={keenSliderBannerRef}>
 					<div className="keen-slider__slide flex h-full w-full">
-						<AspectRatio ratio={16 / 4}>
+						<AspectRatio ratio={16 / 6}>
 							<Image
 								src={'/banner.png'}
 								alt="Gambar"
@@ -60,7 +60,7 @@ export default function Home() {
 						</AspectRatio>
 					</div>
 					<div className="keen-slider__slide flex h-full w-full">
-						<AspectRatio ratio={16 / 4}>
+						<AspectRatio ratio={16 / 6}>
 							<Image
 								src={'/banner.png'}
 								alt="Gambar"

@@ -1,8 +1,10 @@
 'use client';
 import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import { Collection } from '@/hooks/collections/use-collections';
+import { Edit } from 'lucide-react';
 import moment from 'moment';
 import React from 'react';
 
@@ -46,20 +48,24 @@ export function OverviewSkeleton() {
 
 export default function Overview({ collection }: { collection?: Collection }) {
 	return (
-		<div className='space-y-4'>
+		<div className="space-y-4">
 			<Card>
-				<CardHeader>
+				<CardHeader className="inline-flex justify-between items-center">
 					<CardTitle>Summary</CardTitle>
+					<Button variant={'outline'} size={'icon'}>
+						<Edit />
+					</Button>
 				</CardHeader>
 				<CardContent>
-					<p className="text-muted-foreground text-sm">
-						{collection?.description}
-					</p>
+					<p className="text-muted-foreground text-sm">{collection?.description}</p>
 				</CardContent>
 			</Card>
 			<Card>
-				<CardHeader>
+				<CardHeader className='inline-flex justify-between items-center'>
 					<CardTitle>Dataset Summary</CardTitle>
+					<Button variant={'outline'} size={'icon'}>
+						<Edit />
+					</Button>
 				</CardHeader>
 				<CardContent>
 					<div className="flex flex-col gap-4">

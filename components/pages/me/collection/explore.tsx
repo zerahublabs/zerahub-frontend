@@ -1,4 +1,4 @@
-import FileExplorer from '@/components/block/files/explorer/explorer';
+import FileExplorer from '@/components/pages/me/collection/files/explorer/explorer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import {
@@ -46,70 +46,7 @@ export function ExploreSkeleton() {
 export default function Explore() {
 	return (
 		<div className="space-y-4">
-			<Card>
-				<CardHeader>
-					<CardTitle>Columns Description</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Table className="border">
-						<TableHeader>
-							<TableRow>
-								<TableHead>Column</TableHead>
-								<TableHead>Description</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{[
-								{ name: 'Name', description: 'Name of the dataset' },
-								{ name: 'Size', description: 'Size of the dataset' },
-								{ name: 'Type', description: 'Type of the dataset' },
-								{ name: 'Price', description: 'Price of the dataset' },
-							].map((item) => (
-								<TableRow key={item.name}>
-									<TableCell>{item.name}</TableCell>
-									<TableCell>{item.description}</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardHeader>
-					<CardTitle>Dataset Files</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Table className="border">
-						<TableHeader>
-							<TableRow>
-								<TableHead>File Name</TableHead>
-								<TableHead>Size</TableHead>
-								<TableHead>Type</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{[
-								{
-									name: 'dataset.csv',
-									size: '20 MB',
-									type: 'CSV',
-								},
-								{
-									name: 'dataset.json',
-									size: '10 MB',
-									type: 'JSON',
-								},
-							].map((item) => (
-								<TableRow key={item.name}>
-									<TableCell>{item.name}</TableCell>
-									<TableCell>{item.size}</TableCell>
-									<TableCell>{item.type}</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</CardContent>
-			</Card>
+			<FileExplorer />
 			<Card>
 				<CardHeader>
 					<CardTitle>Samples</CardTitle>
@@ -142,7 +79,6 @@ export default function Explore() {
 					</Table>
 				</CardContent>
 			</Card>
-			<FileExplorer />
 		</div>
 	);
 }

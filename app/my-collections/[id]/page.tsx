@@ -3,10 +3,9 @@ import { DetailsSkeleton } from '@/components/pages/collection/details';
 import { ExploreSkeleton } from '@/components/pages/collection/explore';
 import { OverviewSkeleton } from '@/components/pages/collection/overview';
 import { StatsSkeleton } from '@/components/pages/collection/stats';
-import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/shadcn/tabs';
 import { useCollectionDetails } from '@/hooks/collections/use-collections';
-import { AlertCircleIcon, BarChart, Info, Rows } from 'lucide-react';
+import { BarChart, FileSearch, Info, Table } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import React from 'react';
@@ -36,19 +35,23 @@ export default function Page() {
 	return (
 		<div className="flex flex-col-reverse gap-4 mx-4">
 			<div className="flex flex-col w-full gap-4">
-				<Tabs defaultValue="overview">s
+				<Tabs defaultValue="overview">
 					<TabsList>
 						<TabsTrigger value="overview">
 							<Info className="w-4 h-4 mr-1" />
-							Overview
+							<span>Overview</span>
 						</TabsTrigger>
 						<TabsTrigger value="explore">
-							<Rows className="w-4 h-4 mr-1" />
-							Explore
+							<FileSearch className="w-4 h-4 mr-1" />
+							<span>Explore</span>
 						</TabsTrigger>
 						<TabsTrigger value="stats">
 							<BarChart className="w-4 h-4 mr-1" />
-							Stats
+							<span>Stats</span>
+						</TabsTrigger>
+						<TabsTrigger value='data'>
+							<Table className='w-4 h-4 mr-1' />
+							<span>Data</span>
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="overview" className="space-y-2">
@@ -65,12 +68,6 @@ export default function Page() {
 			<div className="lg:sticky top-4 self-start flex flex-col gap-4 w-full">
 				<CollectionDetails collection={collection} />
 			</div>
-			<Alert variant={'destructive'}>
-				<AlertCircleIcon />
-				<AlertDescription>
-					Please upload a datasets to your collection to start selling.
-				</AlertDescription>
-			</Alert>
 		</div>
 	);
 }
