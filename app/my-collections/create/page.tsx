@@ -22,8 +22,8 @@ export default function Page() {
 	const formRef = useRef<HTMLFormElement>(null);
 
 	return (
-		<div className="flex flex-col h-full justify-center mx-4 gap-4">
-			<Card className='w-full'>
+		<div className="flex flex-col h-full mx-4 gap-4">
+			<Card className="w-full">
 				<CardHeader>
 					<CardTitle>Publish your Collections</CardTitle>
 					<CardDescription>
@@ -38,12 +38,6 @@ export default function Page() {
 						className="flex flex-col gap-6 w-full"
 					>
 						<div className="flex flex-col gap-2">
-							<Label htmlFor="dataset-banner" className="text-sm font-semibold">
-								Dataset Banner
-							</Label>
-							<Dropzone onAcceptFile={setCover} />
-						</div>
-						<div className="flex flex-col gap-2">
 							<Label htmlFor="dataset-name" className="text-sm font-semibold">
 								Dataset Name
 							</Label>
@@ -57,6 +51,16 @@ export default function Page() {
 								className="h-full"
 								value={description}
 								onChange={(e) => setDescription(e.target.value)}
+							/>
+						</div>
+						<div className="flex flex-col gap-2">
+							<Label htmlFor="dataset-banner" className="text-sm font-semibold">
+								Dataset Banner
+							</Label>
+							<Dropzone
+								onDrop={(acceptedFiles) => setCover(acceptedFiles[0])}
+								only="image"
+								maxFiles={1}
 							/>
 						</div>
 					</form>

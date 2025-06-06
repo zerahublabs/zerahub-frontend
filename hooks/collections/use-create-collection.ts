@@ -1,6 +1,7 @@
 import { FormEvent, useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import { useAuthorization } from '../use-auth';
+import { useRouter } from 'next/navigation';
 
 interface CollectionData {
 	id: string;
@@ -10,6 +11,7 @@ interface CollectionData {
 }
 
 export function useCreateCollection() {
+	const router = useRouter()
 	const { token } = useAuthorization();
 	const [cover, setCover] = useState<File>();
 	const [name, setName] = useState('');
@@ -55,12 +57,13 @@ export function useCreateCollection() {
 					body: formData,
 				});
 				await response.json();
+				router.push(`/my-collections/${collectionId}`)
 			} catch (error) {
 				console.error(error);
 				throw error;
 			}
 		},
-		[cover, token],
+		[cover, token, router],
 	);
 
 	const pushCollectionToContract = useCallback(() => {}, []);

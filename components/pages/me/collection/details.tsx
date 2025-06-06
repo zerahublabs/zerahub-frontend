@@ -59,7 +59,9 @@ export function DetailsAction() {
 
 	if (collection?.transactionHash == null) {
 		return <SignCollectionAction />;
-	} else if (collection.transactionHash && collection.status === 'DRAFT') {
+	}
+
+	if (collection.transactionHash && collection.status == 'DRAFT') {
 		return <Button disabled>Publish Now</Button>;
 	} else {
 		return <Button disabled>Archieve Now</Button>;
@@ -98,8 +100,10 @@ export default function Details() {
 						<div className="flex flex-col gap-4">
 							<div className="inline-flex gap-4">
 								<div className="inline-flex gap-1">
-									<h3 className="font-bold text-xl text-primary">0</h3>
-									<small className="text-muted-foreground">ETH</small>
+									<h3 className="font-bold text-3xl text-primary">
+										{collection.price}
+									</h3>
+									<small className="text-muted-foreground">USDT</small>
 								</div>
 							</div>
 							<div className={`flex flex-row gap-4 w-full p-2 rounded-2xl`}>
