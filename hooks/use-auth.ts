@@ -1,4 +1,3 @@
-import { BASE_URL_API } from '@/constants';
 import { useUser } from '@/lib/features/user/hooks';
 import { useAppKitAccount, useAppKitEvents, useAppKitNetwork } from '@reown/appkit/react';
 import { useLocalStorageState } from 'ahooks';
@@ -110,7 +109,7 @@ export function useAuthentication() {
 			(async () => {
 				try {
 					const message = siweMessage?.prepareMessage();
-					const res = await fetch(`${BASE_URL_API}/auths`, {
+					const res = await fetch(`/api/auths`, {
 						method: 'post',
 						cache: 'no-store',
 						headers: {
