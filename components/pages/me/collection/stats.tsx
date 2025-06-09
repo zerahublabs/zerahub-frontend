@@ -18,7 +18,7 @@ export function StatsSkeleton() {
 				<CardTitle>Payment Histories</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Skeleton className='w-full h-48' />
+				<Skeleton className="w-full h-48" />
 			</CardContent>
 		</Card>
 	);
