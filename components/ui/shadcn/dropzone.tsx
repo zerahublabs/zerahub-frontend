@@ -8,7 +8,7 @@ const acceptedFileType = {
 		'image/*': [],
 		'document/*': [],
 		'text/*': [],
-		"archive/*": ['.zip', '.tar', '.rar', '.7z', '.gz'],
+		'archive/*': ['.zip', '.tar', '.rar', '.7z', '.gz'],
 		'audio/*': ['.mp3', '.wav', '.ogg', '.flac', '.aac'],
 		'video/*': ['.mp4', '.avi', '.mov', '.mkv', '.webm'],
 	},

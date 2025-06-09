@@ -80,9 +80,7 @@ export default function AppProvider(props: { children: ReactNode }) {
 					<main className="flex-grow h-full overflow-y-hidden space-y-2 mb-2">
 						<div className="lg:pr-2 mx-auto h-full">
 							<Header />
-							<Suspense fallback={<p>Loading...</p>}>
-								{props.children}
-							</Suspense>
+							<Suspense fallback={<p>Loading...</p>}>{props.children}</Suspense>
 
 							<WelcomeSignProvider />
 							<Toaster />

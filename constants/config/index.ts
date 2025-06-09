@@ -17,7 +17,7 @@ export const ZeraHubChain = /*#__PURE__*/ defineChain({
 });
 
 // Get projectId from https://cloud.reown.com
-export const projectId = "5e44d15a7f1e2cc9da5da15dd7d95e10"; // this is a public projectId only to use on localhost
+export const projectId = '5e44d15a7f1e2cc9da5da15dd7d95e10'; // this is a public projectId only to use on localhost
 
 if (!projectId) {
 	throw new Error('Project ID is not defined');

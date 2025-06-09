@@ -94,7 +94,7 @@ export function useCollections() {
 }
 
 export function useCollectionDetails(collectionId: string) {
-	const { address } = useAppKitAccount()
+	const { address } = useAppKitAccount();
 	const { setCollection } = useCollection();
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -116,7 +116,7 @@ export function useCollectionDetails(collectionId: string) {
 				console.log('Collection data:', data.data);
 				setCollection({
 					...data.data,
-					isOwner: data.data.publisher == address
+					isOwner: data.data.publisher == address,
 				});
 				setIsLoading(false);
 			} catch (error) {

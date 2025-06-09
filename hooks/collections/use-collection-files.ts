@@ -32,6 +32,6 @@ export function useCollectionFiles() {
 
 	return {
 		files,
-		isLoading
+		isLoading,
 	};
 }

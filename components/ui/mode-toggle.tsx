@@ -3,7 +3,12 @@
 import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './shadcn/dropdown-menu';
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from './shadcn/dropdown-menu';
 import { Button } from './shadcn/button';
 
 export function ModeToggle() {

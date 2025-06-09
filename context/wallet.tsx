@@ -44,16 +44,16 @@ function WalletContextProvider({
 	children: ReactNode;
 	cookies: string | null;
 }) {
-	const { theme } = useTheme()
-	const { setThemeMode } = useAppKitTheme()
+	const { theme } = useTheme();
+	const { setThemeMode } = useAppKitTheme();
 
 	const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
 
 	useEffect(() => {
 		if (theme) {
-			setThemeMode(theme as ThemeMode)
+			setThemeMode(theme as ThemeMode);
 		}
-	}, [theme, setThemeMode])
+	}, [theme, setThemeMode]);
 
 	return (
 		<WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>

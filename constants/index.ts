@@ -25,7 +25,7 @@ export const BASE_URL_API = 'http://localhost:3001';
 // 	},
 // };
 export const ZERAHUB_CONTRACTS = {
-	"31337": {
+	'31337': {
 		payment: {
 			address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
 			abi: ArtifactCollection.abi as Abi,
@@ -39,7 +39,7 @@ export const ZERAHUB_CONTRACTS = {
 			abi: ArtifactCollection.abi as Abi,
 		},
 	},
-	"97": {
+	'97': {
 		token: {
 			address: '0x907FE355e1c15fD76ca4ee77e066634dCae0B51C',
 			abi: ArtifactCollection.abi as Abi,
@@ -52,5 +52,5 @@ export const ZERAHUB_CONTRACTS = {
 			address: '0xfE488afadD7836b58b8cAb8B58f757d8d0F9f6B2',
 			abi: ArtifactCollection.abi as Abi,
 		},
-	}
+	},
 };

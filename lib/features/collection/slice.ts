@@ -12,7 +12,7 @@ export type CollectionFiles = {
 export type CollectionCategory = {
 	id: string;
 	name: string;
-}
+};
 
 export type Collection = {
 	id: string;
@@ -32,7 +32,7 @@ export type Collection = {
 	publisher: string;
 	files?: CollectionFiles[];
 	isOwner: boolean;
-	categories?: CollectionCategory[]
+	categories?: CollectionCategory[];
 };
 
 const initialState: Collection = {
