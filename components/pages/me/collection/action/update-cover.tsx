@@ -13,7 +13,7 @@ import React, { useRef } from 'react';
 
 export default function UpdateCoverCollection() {
 	const formRef = useRef<HTMLFormElement>(null)
-	const { isLoading, setCover, onSubmitHandler } = useUpdateCoverCollection();
+	const { isLoading, onSubmitHandler } = useUpdateCoverCollection();
 
 	return (
 		<Dialog>
@@ -30,7 +30,7 @@ export default function UpdateCoverCollection() {
 				</DialogHeader>
 				<form ref={formRef} onSubmit={onSubmitHandler} className="flex flex-col gap-4 w-full">
 					<div className="flex flex-col gap-2 items-center w-full">
-						<Dropzone onAcceptFile={(e) => setCover(e)} />
+						<Dropzone onDrop={(e) => console.log(e)} />
 					</div>
 				</form>
 				<Button disabled={isLoading} onClick={() => formRef.current?.requestSubmit()}>
