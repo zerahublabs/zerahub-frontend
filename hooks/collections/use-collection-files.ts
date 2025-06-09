@@ -7,6 +7,7 @@ export function useCollectionFiles() {
 	const { token } = useAuthorization();
 	const { collection } = useCollection();
 	const [files, setFiles] = useState<CollectionFiles[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const [isAlreadyFetched, setIsAlreadyFetched] = useState(false);
 
 	const fetchCollectionFiles = useCallback(async () => {
@@ -21,6 +22,7 @@ export function useCollectionFiles() {
 		}
 		const data = await response.json();
 		setFiles(data.data);
+		setIsLoading(false);
 	}, [collection.id, token]);
 
 	useEffect(() => {
@@ -29,6 +31,7 @@ export function useCollectionFiles() {
 	}, [collection, isAlreadyFetched, fetchCollectionFiles]);
 
 	return {
-		files
+		files,
+		isLoading
 	};
 }
