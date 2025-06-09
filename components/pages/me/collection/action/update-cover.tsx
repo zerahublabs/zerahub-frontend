@@ -12,7 +12,7 @@ import { Edit, LoaderCircle, Save } from 'lucide-react';
 import React, { useRef } from 'react';
 
 export default function UpdateCoverCollection() {
-	const formRef = useRef<HTMLFormElement>(null)
+	const formRef = useRef<HTMLFormElement>(null);
 	const { isLoading, onSubmitHandler } = useUpdateCoverCollection();
 
 	return (
@@ -28,13 +28,17 @@ export default function UpdateCoverCollection() {
 				<DialogHeader>
 					<DialogTitle>Update Cover</DialogTitle>
 				</DialogHeader>
-				<form ref={formRef} onSubmit={onSubmitHandler} className="flex flex-col gap-4 w-full">
+				<form
+					ref={formRef}
+					onSubmit={onSubmitHandler}
+					className="flex flex-col gap-4 w-full"
+				>
 					<div className="flex flex-col gap-2 items-center w-full">
 						<Dropzone onDrop={(e) => console.log(e)} />
 					</div>
 				</form>
 				<Button disabled={isLoading} onClick={() => formRef.current?.requestSubmit()}>
-					{ isLoading ? <LoaderCircle className='animate-spin' /> : <Save />}
+					{isLoading ? <LoaderCircle className="animate-spin" /> : <Save />}
 					Save
 				</Button>
 			</DialogContent>
