@@ -9,6 +9,11 @@ export type CollectionFiles = {
 	updatedAt: string;
 };
 
+export type CollectionCategory = {
+	id: string;
+	name: string;
+}
+
 export type Collection = {
 	id: string;
 	userId: string;
@@ -26,6 +31,8 @@ export type Collection = {
 	deletedAt: null;
 	publisher: string;
 	files?: CollectionFiles[];
+	isOwner: boolean;
+	categories?: CollectionCategory[]
 };
 
 const initialState: Collection = {
@@ -44,6 +51,7 @@ const initialState: Collection = {
 	updatedAt: '',
 	deletedAt: null,
 	publisher: '',
+	isOwner: false,
 };
 
 export const collectionSlice = createSlice({
@@ -62,6 +70,7 @@ export const collectionSlice = createSlice({
 	},
 });
 
-export const { setCollectionData, setCollectionFiles, resetCollectionData } = collectionSlice.actions;
+export const { setCollectionData, setCollectionFiles, resetCollectionData } =
+	collectionSlice.actions;
 
 export default collectionSlice.reducer;
