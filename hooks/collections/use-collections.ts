@@ -3,6 +3,7 @@ import { useAuthorization } from '../use-auth';
 import { toast } from 'sonner';
 import { useCollection } from '@/lib/features/collection/hooks';
 import { Collection } from '@/lib/features/collection/slice';
+import { useAppKitAccount } from '@reown/appkit/react';
 
 export function useUserCollections() {
 	const [collections, setCollections] = useState<Collection[]>([]);
@@ -93,6 +94,7 @@ export function useCollections() {
 }
 
 export function useCollectionDetails(collectionId: string) {
+	const { address } = useAppKitAccount()
 	const { setCollection } = useCollection();
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -111,7 +113,11 @@ export function useCollectionDetails(collectionId: string) {
 				}
 
 				const data = await response.json();
-				setCollection(data.data);
+				console.log('Collection data:', data.data);
+				setCollection({
+					...data.data,
+					isOwner: data.data.publisher == address
+				});
 				setIsLoading(false);
 			} catch (error) {
 				toast.error('Error fetching collections');
@@ -121,7 +127,7 @@ export function useCollectionDetails(collectionId: string) {
 		}
 
 		fetchCollections();
-	}, [collectionId, setCollection]);
+	}, [collectionId, address, setCollection]);
 
 	return {
 		isLoading,
