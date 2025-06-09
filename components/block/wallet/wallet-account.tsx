@@ -49,16 +49,18 @@ export default function WalletAccount() {
 	const { disconnect } = useDisconnect();
 	const username = 'catdoom';
 
-	const handleSwitchNetwork = useCallback((network: AppKitNetwork) => {
-		setIsSwitchingNetwork(true);
-		switchNetwork(network);
-		setIsSwitchingNetwork(false);
-	}, [switchNetwork]);
+	const handleSwitchNetwork = useCallback(
+		(network: AppKitNetwork) => {
+			setIsSwitchingNetwork(true);
+			switchNetwork(network);
+			setIsSwitchingNetwork(false);
+		},
+		[switchNetwork],
+	);
 
 	if (!isConnected) {
 		return null;
 	}
-
 
 	return (
 		<Drawer direction={'right'}>
@@ -83,7 +85,8 @@ export default function WalletAccount() {
 									{username || address?.substring(0, 8)}...
 								</p>
 								<p className="text-sm text-muted-foreground">
-									{formatEther(balance?.value ?? BigInt(0), 'wei').split('.')[0]} {'\n'}
+									{formatEther(balance?.value ?? BigInt(0), 'wei').split('.')[0]}{' '}
+									{'\n'}
 									{networks.find((n) => n.id === chainId)?.nativeCurrency.symbol}
 								</p>
 							</div>
@@ -116,12 +119,16 @@ export default function WalletAccount() {
 									<div
 										className="inline-flex p-4 justify-between items-center border rounded-md hover:cursor-pointer"
 										key={network.id}
-										onClick={() => handleSwitchNetwork(network as AppKitNetwork)}
+										onClick={() =>
+											handleSwitchNetwork(network as AppKitNetwork)
+										}
 									>
 										<p className="text-sm">{network.name}</p>
-										{network.id === chainId && !isSwitchingNetwork && !isSwitchingNetwork && (
-											<CheckIcon className="w-4 h-4 text-muted-foreground" />
-										)}
+										{network.id === chainId &&
+											!isSwitchingNetwork &&
+											!isSwitchingNetwork && (
+												<CheckIcon className="w-4 h-4 text-muted-foreground" />
+											)}
 										{isSwitchingNetwork && network.id === chainId && (
 											<LoaderCircle className="w-4 h-4 animate-spin text-muted-foreground" />
 										)}
