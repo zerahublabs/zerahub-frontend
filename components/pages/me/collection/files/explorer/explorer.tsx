@@ -20,6 +20,7 @@ import { useUploadFiles } from '@/hooks/collections/use-upload-files';
 import { bytesToMegabytes } from '@/lib/unit';
 import { FileIcon, FolderClosedIcon, LoaderCircle, Upload } from 'lucide-react';
 import moment from 'moment';
+import { usePathname } from 'next/navigation';
 import React, { ReactNode, useRef } from 'react';
 
 export function UploadFileAction() {
@@ -74,15 +75,22 @@ export function FileExplorerWrapperItem(props: { children: ReactNode }) {
 }
 
 export default function FileExplorer() {
-	const { files } = useCollectionFiles();
+	const pathname = usePathname();
+	const { isLoading, files } = useCollectionFiles();
 
 	return (
 		<Card>
 			<CardHeader className="inline-flex justify-between items-center">
 				<CardTitle>File Explorer</CardTitle>
-				<UploadFileAction />
+
+				{pathname.startsWith('/my-collections') && <UploadFileAction />}
 			</CardHeader>
 			<CardContent>
+				{isLoading ? (
+					<div className="flex justify-center items-center w-full h-full">
+						<LoaderCircle className="animate-spin" />
+					</div>
+				) : null}
 				{files?.length == 0 ? (
 					<div className="inline-flex justify-center items-center w-full h-full text-muted-foreground">
 						No Files
