@@ -47,7 +47,7 @@ export function OverviewSkeleton() {
 }
 
 export default function Overview() {
-	const { collection } = useCollection()
+	const { collection } = useCollection();
 
 	return (
 		<div className="space-y-4">
@@ -63,7 +63,7 @@ export default function Overview() {
 				</CardContent>
 			</Card>
 			<Card>
-				<CardHeader className='inline-flex justify-between items-center'>
+				<CardHeader className="inline-flex justify-between items-center">
 					<CardTitle>Dataset Summary</CardTitle>
 					<Button variant={'outline'} size={'icon'}>
 						<Edit />
