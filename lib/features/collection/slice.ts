@@ -1,5 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export type CollectionFiles = {
+	id: string;
+	key: string;
+	filename: string;
+	size: number;
+	createdAt: string;
+	updatedAt: string;
+};
+
 export type Collection = {
 	id: string;
 	userId: string;
@@ -16,6 +25,7 @@ export type Collection = {
 	updatedAt: string;
 	deletedAt: null;
 	publisher: string;
+	files?: CollectionFiles[];
 };
 
 const initialState: Collection = {
@@ -43,12 +53,15 @@ export const collectionSlice = createSlice({
 		setCollectionData: (state, action: PayloadAction<Collection>) => {
 			return action.payload;
 		},
+		setCollectionFiles: (state, action: PayloadAction<CollectionFiles[]>) => {
+			state.files = action.payload;
+		},
 		resetCollectionData: () => {
 			return initialState;
 		},
 	},
 });
 
-export const { setCollectionData, resetCollectionData } = collectionSlice.actions;
+export const { setCollectionData, setCollectionFiles, resetCollectionData } = collectionSlice.actions;
 
 export default collectionSlice.reducer;

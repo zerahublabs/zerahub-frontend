@@ -15,15 +15,12 @@ import {
 } from '@/components/ui/shadcn/dialog';
 import Dropzone from '@/components/ui/shadcn/dropzone';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/shadcn/table';
+import { useCollectionFiles } from '@/hooks/collections/use-collection-files';
 import { useUploadFiles } from '@/hooks/collections/use-upload-files';
-import { FileIcon, FolderClosedIcon, FolderIcon, LoaderCircle, Upload } from 'lucide-react';
+import { bytesToMegabytes } from '@/lib/unit';
+import { FileIcon, FolderClosedIcon, LoaderCircle, Upload } from 'lucide-react';
+import moment from 'moment';
 import React, { ReactNode, useRef } from 'react';
-
-const files: {
-	type: string;
-	name: string;
-	last_commit: string;
-}[] = [];
 
 export function UploadFileAction() {
 	const formRef = useRef<HTMLFormElement>(null);
@@ -77,6 +74,8 @@ export function FileExplorerWrapperItem(props: { children: ReactNode }) {
 }
 
 export default function FileExplorer() {
+	const { files } = useCollectionFiles();
+
 	return (
 		<Card>
 			<CardHeader className="inline-flex justify-between items-center">
@@ -84,7 +83,7 @@ export default function FileExplorer() {
 				<UploadFileAction />
 			</CardHeader>
 			<CardContent>
-				{files.length == 0 ? (
+				{files?.length == 0 ? (
 					<div className="inline-flex justify-center items-center w-full h-full text-muted-foreground">
 						No Files
 					</div>
@@ -101,42 +100,26 @@ export default function FileExplorer() {
 									</FileExplorerWrapperItem>
 								</TableCell>
 								<TableCell></TableCell>
+								<TableCell></TableCell>
 							</TableRow>
-							{files.map((file, i) => {
-								if (file.type === 'file') {
-									return (
-										<TableRow key={i}>
-											<TableCell>
-												<FileExplorerWrapperItem>
-													<div className="inline-flex space-x-2 items-center">
-														<FileIcon className="w-4 h-4 mr-2" />
-														<small>{file.name}</small>
-													</div>
-												</FileExplorerWrapperItem>
-											</TableCell>
-											<TableCell>
-												<small>{file.last_commit}</small>
-											</TableCell>
-										</TableRow>
-									);
-								} else if (file.type === 'folder') {
-									return (
-										<TableRow key={i}>
-											<TableCell>
-												<FileExplorerWrapperItem>
-													<div className="inline-flex space-x-2 items-center">
-														<FolderIcon className="w-4 h-4 mr-2" />
-														<small>{file.name}</small>
-													</div>
-												</FileExplorerWrapperItem>
-											</TableCell>
-											<TableCell>
-												<small>{file.last_commit}</small>
-											</TableCell>
-										</TableRow>
-									);
-								}
-							})}
+							{files?.map((file, i) => (
+								<TableRow key={i}>
+									<TableCell>
+										<FileExplorerWrapperItem>
+											<div className="inline-flex space-x-2 items-center">
+												<FileIcon className="w-4 h-4 mr-2" />
+												<small>{file?.filename}</small>
+											</div>
+										</FileExplorerWrapperItem>
+									</TableCell>
+									<TableCell>
+										<small>{bytesToMegabytes(file.size)}</small>
+									</TableCell>
+									<TableCell>
+										<small>{moment(file.createdAt).fromNow()}</small>
+									</TableCell>
+								</TableRow>
+							))}
 						</TableBody>
 					</Table>
 				)}
