@@ -31,7 +31,7 @@ export default async function RootLayout({
 				<ThemeProvider attribute={'class'} defaultTheme={'system'} enableSystem>
 					<WalletContextProvider cookies={cookies}>
 						<StoreProvider>
-								<AppProvider>{children}</AppProvider>
+							<AppProvider>{children}</AppProvider>
 						</StoreProvider>
 					</WalletContextProvider>
 				</ThemeProvider>
