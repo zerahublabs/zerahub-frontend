@@ -1,5 +1,4 @@
 import { AspectRatio } from '@/components/ui/shadcn/aspect-ratio';
-import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Card, CardContent } from '@/components/ui/shadcn/card';
 import { Separator } from '@/components/ui/shadcn/separator';
@@ -54,7 +53,7 @@ export function DetailsSkeleton() {
 export default function Details(props: { slug: string }) {
 	useCollectionDetails(props.slug);
 
-	const { collection } = useCollection()
+	const { collection } = useCollection();
 
 	return (
 		<Card className="w-full lg:w-[300px]">
@@ -62,14 +61,12 @@ export default function Details(props: { slug: string }) {
 				<div className="flex flex-col gap-6">
 					<div className="overflow-hidden">
 						<AspectRatio ratio={16 / 9}>
-							<Badge className="absolute top-2 left-2 z-10" variant="default">
-								Purchased
-							</Badge>
 							<Image
-								src={`/static/${collection?.cover.filename}`}
+								src={`/static/s3/cover/${collection?.cover.id}`}
 								alt="Gambar"
 								fill
 								className="rounded-xl object-cover"
+								loading="eager"
 							/>
 						</AspectRatio>
 					</div>
@@ -79,8 +76,8 @@ export default function Details(props: { slug: string }) {
 						<div className="flex flex-col gap-4">
 							<div className="inline-flex gap-4">
 								<div className="inline-flex gap-1">
-									<h3 className="font-bold text-xl text-primary">0.001</h3>
-									<small className="text-muted-foreground">ETH</small>
+									<small className="text-muted-foreground">$</small>
+									<h3 className="font-bold text-xl text-primary">200</h3>
 								</div>
 							</div>
 							<div className={`flex flex-col gap-4 w-full p-2 rounded-2xl`}>
@@ -101,9 +98,7 @@ export default function Details(props: { slug: string }) {
 									Tabular
 								</div>
 							</div>
-							<Button disabled>
-								Publish Datasets
-							</Button>
+							<Button>Buy Now</Button>
 						</div>
 					</div>
 				</div>
