@@ -7,7 +7,10 @@ const acceptedFileType = {
 	all: {
 		'image/*': [],
 		'document/*': [],
-		'text/*': []
+		'text/*': [],
+		"archive/*": ['.zip', '.tar', '.rar', '.7z', '.gz'],
+		'audio/*': ['.mp3', '.wav', '.ogg', '.flac', '.aac'],
+		'video/*': ['.mp4', '.avi', '.mov', '.mkv', '.webm'],
 	},
 	image: {
 		'image/*': [

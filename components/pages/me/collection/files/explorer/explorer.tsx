@@ -15,8 +15,9 @@ import {
 } from '@/components/ui/shadcn/dialog';
 import Dropzone from '@/components/ui/shadcn/dropzone';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/shadcn/table';
-import { FileIcon, FolderClosedIcon, FolderIcon, Upload } from 'lucide-react';
-import React, { ReactNode } from 'react';
+import { useUploadFiles } from '@/hooks/collections/use-upload-files';
+import { FileIcon, FolderClosedIcon, FolderIcon, LoaderCircle, Upload } from 'lucide-react';
+import React, { ReactNode, useRef } from 'react';
 
 const files: {
 	type: string;
@@ -25,6 +26,9 @@ const files: {
 }[] = [];
 
 export function UploadFileAction() {
+	const formRef = useRef<HTMLFormElement>(null);
+	const { isLoading, onUploadHandler, setFiles } = useUploadFiles();
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -37,10 +41,22 @@ export function UploadFileAction() {
 					<DialogTitle>Upload files</DialogTitle>
 				</DialogHeader>
 				<div className="flex flex-col gap-4 items-center max-w-full">
-					<form action="">
-						<Dropzone onDrop={(e) => console.log(e)} only="all" />
+					<form ref={formRef} onSubmit={onUploadHandler} className="w-full">
+						<Dropzone
+							onDrop={(e) => setFiles(e[0])}
+							only="all"
+							maxFiles={1}
+							maxSize={1024 * 1024 * 1024}
+						/>
 					</form>
-					<Button className="w-full">Upload</Button>
+					<Button
+						onClick={() => formRef.current?.requestSubmit()}
+						disabled={isLoading}
+						className="w-full"
+					>
+						{isLoading ? <LoaderCircle className="animate-spin" /> : <Upload />}
+						Upload
+					</Button>
 				</div>
 			</DialogContent>
 		</Dialog>
