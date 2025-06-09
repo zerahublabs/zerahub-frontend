@@ -29,7 +29,7 @@ const CollectionDetails = dynamic(() => import('@/components/pages/me/collection
 
 export default function Page() {
 	const params = useParams<{ id: string }>();
-	useCollectionDetails(params.id)
+	useCollectionDetails(params.id);
 
 	return (
 		<div className="flex flex-col-reverse gap-4 mx-4">
@@ -48,8 +48,8 @@ export default function Page() {
 							<BarChart className="w-4 h-4 mr-1" />
 							<span>Stats</span>
 						</TabsTrigger>
-						<TabsTrigger value='data'>
-							<Table className='w-4 h-4 mr-1' />
+						<TabsTrigger value="data">
+							<Table className="w-4 h-4 mr-1" />
 							<span>Data</span>
 						</TabsTrigger>
 					</TabsList>
