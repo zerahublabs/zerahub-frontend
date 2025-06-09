@@ -71,6 +71,10 @@ export function DetailsAction() {
 export default function Details() {
 	const { collection } = useCollection();
 
+	if (!collection) {
+		return <DetailsSkeleton />;
+	}
+
 	return (
 		<Card className="w-full">
 			<CardContent>
@@ -78,7 +82,7 @@ export default function Details() {
 					<div className="overflow-hidden w-full h-full">
 						<AspectRatio ratio={16 / 9} className="group">
 							<Image
-								src={`/static/${collection?.cover.filename}`}
+								src={`/static/s3/cover/${collection?.cover.id}`}
 								alt="Gambar"
 								fill
 								className="rounded-xl object-cover"

@@ -18,40 +18,11 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/shadcn/ta
 import { FileIcon, FolderClosedIcon, FolderIcon, Upload } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
-const files = [
-	{
-		type: 'folder',
-		name: 'trains',
-		last_commit: 'feat: add train dataset preprocessing scripts',
-		files: [
-			{
-				type: 'file',
-				name: 'data.csv',
-				size: '100MB',
-				last_commit: 'chore: update training data with latest samples',
-			},
-		],
-	},
-	{
-		type: 'folder',
-		name: 'test',
-		last_commit: 'test: add validation dataset and test cases',
-		files: [
-			{
-				type: 'file',
-				name: 'data.csv',
-				size: '100MB',
-				last_commit: 'fix: correct test data formatting issues',
-			},
-		],
-	},
-	{
-		type: 'file',
-		name: 'README.md',
-		last_commit: 'docs: update dataset documentation and usage examples',
-		size: '10KB',
-	},
-];
+const files: {
+	type: string;
+	name: string;
+	last_commit: string;
+}[] = [];
 
 export function UploadFileAction() {
 	return (
@@ -65,9 +36,9 @@ export function UploadFileAction() {
 				<DialogHeader>
 					<DialogTitle>Upload files</DialogTitle>
 				</DialogHeader>
-				<div className="flex flex-col gap-4 items-center">
+				<div className="flex flex-col gap-4 items-center max-w-full">
 					<form action="">
-						<Dropzone onAcceptFile={() => console.log('accepted')} />
+						<Dropzone onDrop={(e) => console.log(e)} only="all" />
 					</form>
 					<Button className="w-full">Upload</Button>
 				</div>
@@ -97,56 +68,62 @@ export default function FileExplorer() {
 				<UploadFileAction />
 			</CardHeader>
 			<CardContent>
-				<Table>
-					<TableBody>
-						<TableRow>
-							<TableCell>
-								<FileExplorerWrapperItem>
-									<div className="inline-flex space-x-2 items-center">
-										<FolderClosedIcon className="w-4 h-4 mr-2" />
-										<small>..</small>
-									</div>
-								</FileExplorerWrapperItem>
-							</TableCell>
-							<TableCell></TableCell>
-						</TableRow>
-						{files.map((file, i) => {
-							if (file.type === 'file') {
-								return (
-									<TableRow key={i}>
-										<TableCell>
-											<FileExplorerWrapperItem>
-												<div className="inline-flex space-x-2 items-center">
-													<FileIcon className="w-4 h-4 mr-2" />
-													<small>{file.name}</small>
-												</div>
-											</FileExplorerWrapperItem>
-										</TableCell>
-										<TableCell>
-											<small>{file.last_commit}</small>
-										</TableCell>
-									</TableRow>
-								);
-							} else if (file.type === 'folder') {
-								return (
-									<TableRow key={i}>
-										<TableCell>
-											<FileExplorerWrapperItem>
-												<div className="inline-flex space-x-2 items-center">
-													<FolderIcon className="w-4 h-4 mr-2" />
-													<small>{file.name}</small>
-												</div>
-											</FileExplorerWrapperItem>
-										</TableCell>
-										<TableCell>
-											<small>{file.last_commit}</small>
-										</TableCell>
-									</TableRow>
-								);
-							}
-						})}
-					</TableBody>
-				</Table>
+				{files.length == 0 ? (
+					<div className="inline-flex justify-center items-center w-full h-full text-muted-foreground">
+						No Files
+					</div>
+				) : (
+					<Table>
+						<TableBody>
+							<TableRow>
+								<TableCell>
+									<FileExplorerWrapperItem>
+										<div className="inline-flex space-x-2 items-center">
+											<FolderClosedIcon className="w-4 h-4 mr-2" />
+											<small>..</small>
+										</div>
+									</FileExplorerWrapperItem>
+								</TableCell>
+								<TableCell></TableCell>
+							</TableRow>
+							{files.map((file, i) => {
+								if (file.type === 'file') {
+									return (
+										<TableRow key={i}>
+											<TableCell>
+												<FileExplorerWrapperItem>
+													<div className="inline-flex space-x-2 items-center">
+														<FileIcon className="w-4 h-4 mr-2" />
+														<small>{file.name}</small>
+													</div>
+												</FileExplorerWrapperItem>
+											</TableCell>
+											<TableCell>
+												<small>{file.last_commit}</small>
+											</TableCell>
+										</TableRow>
+									);
+								} else if (file.type === 'folder') {
+									return (
+										<TableRow key={i}>
+											<TableCell>
+												<FileExplorerWrapperItem>
+													<div className="inline-flex space-x-2 items-center">
+														<FolderIcon className="w-4 h-4 mr-2" />
+														<small>{file.name}</small>
+													</div>
+												</FileExplorerWrapperItem>
+											</TableCell>
+											<TableCell>
+												<small>{file.last_commit}</small>
+											</TableCell>
+										</TableRow>
+									);
+								}
+							})}
+						</TableBody>
+					</Table>
+				)}
 			</CardContent>
 		</Card>
 	);

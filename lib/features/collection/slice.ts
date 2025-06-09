@@ -7,7 +7,7 @@ export type Collection = {
 	description: string;
 	price: 0;
 	cover: {
-		filename: string;
+		id: string;
 	};
 	transactionHash: string | null;
 	status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'SUSPENDED';
@@ -25,7 +25,7 @@ const initialState: Collection = {
 	description: '',
 	price: 0,
 	cover: {
-		filename: '',
+		id: '',
 	},
 	transactionHash: null,
 	status: 'DRAFT',

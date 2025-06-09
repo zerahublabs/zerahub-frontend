@@ -16,7 +16,7 @@ export function useAuthorization() {
 	const router = useRouter();
 	const { isConnected, status } = useAppKitAccount();
 	const { data: event } = useAppKitEvents();
-	const [isLogged, setIsLogged] = useState(false);
+	const [isLogged, setIsLogged] = useState(true);
 	const [profile, setProfile] = useState();
 	const [token, setToken] = useLocalStorageState('token', {
 		defaultValue: '',
@@ -25,20 +25,20 @@ export function useAuthorization() {
 	const { login } = useUser();
 
 	const onFetchUser = useCallback(async () => {
-		const response = await fetch('/api/me/profile', {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		try {
+			const response = await fetch('/api/me/profile', {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			});
 
-		const responseJson = await response.json();
-		if (responseJson.status == 'ok') {
+			const responseJson = await response.json();
 			login(responseJson.data.username, responseJson.data.address);
 			setProfile(responseJson.data);
 			setIsLogged(true);
-		} else {
-			if (responseJson.message === 'Unauthorized') {
+		} catch (error) {
+			if (error instanceof Error) {
 				setIsLogged(false);
 			}
 		}
@@ -99,7 +99,7 @@ export function useAuthentication() {
 	}, [isConnected, address, chainId]);
 
 	useEffect(() => {
-		if (isConnected && !token && !isLogged) {
+		if (isConnected && (!token || !isLogged)) {
 			setIsSignIn(true);
 		}
 	}, [isConnected, token, isLogged]);

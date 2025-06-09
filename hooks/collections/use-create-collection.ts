@@ -11,7 +11,7 @@ interface CollectionData {
 }
 
 export function useCreateCollection() {
-	const router = useRouter()
+	const router = useRouter();
 	const { token } = useAuthorization();
 	const [cover, setCover] = useState<File>();
 	const [name, setName] = useState('');
@@ -40,30 +40,97 @@ export function useCreateCollection() {
 		}
 	}, [name, description, token]);
 
-	const uploadCoverCollectionHandler = useCallback(
+	const requestUploadCollection = useCallback(
 		async (collectionId: string) => {
-			if (!cover) return;
-
-			const formData = new FormData();
-			formData.append('file', cover);
-
 			try {
-				const response = await fetch(`/api/me/collections/${collectionId}/cover`, {
-					cache: 'no-store',
+				const response = await fetch(`/api/me/collections/${collectionId}/request-upload`, {
 					method: 'post',
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
-					body: formData,
+					body: JSON.stringify({
+						key: 'abcdefgh',
+						type: cover?.type,
+						size: (await cover?.arrayBuffer())?.byteLength,
+					}),
 				});
-				await response.json();
-				router.push(`/my-collections/${collectionId}`)
+				return await response.json();
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(error.message);
+				}
+				return null;
+			}
+		},
+		[token, cover],
+	);
+
+	const confirmUploadCollection = useCallback(
+		async (collectionId: string, requestId: string) => {
+			try {
+				const response = await fetch(`/api/me/collections/${collectionId}/confirm-upload`, {
+					method: 'post',
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						requestId,
+					}),
+				});
+				return await response.json();
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(error.message);
+				}
+				return null;
+			}
+		},
+		[token],
+	);
+
+	const uploadCoverCollectionHandler = useCallback(
+		async (collectionId: string) => {
+			if (!cover) return;
+
+			const requestUploadResponse = await requestUploadCollection(collectionId);
+			if (!requestUploadResponse || requestUploadResponse.status != 'ok') return;
+
+			try {
+				await fetch(requestUploadResponse.data.url, {
+					cache: 'no-store',
+					method: 'put',
+					headers: {
+						'Content-Type': cover.type,
+					},
+					body: cover,
+				});
+
+				const confirmUploadResponse = await confirmUploadCollection(
+					collectionId,
+					requestUploadResponse.data.id,
+				);
+
+				const response = await fetch(`/api/me/collections/${collectionId}/cover`, {
+					cache: 'no-store',
+					method: 'put',
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						storageId: confirmUploadResponse.data.id,
+					}),
+				});
+				if (!response.ok) {
+					throw new Error('Failed to upload cover image');
+				}
+				toast.success('Cover image uploaded successfully');
+				router.push(`/my-collections/${collectionId}`);
 			} catch (error) {
 				console.error(error);
 				throw error;
 			}
 		},
-		[cover, token, router],
+		[cover, router, token, requestUploadCollection, confirmUploadCollection],
 	);
 
 	const pushCollectionToContract = useCallback(() => {}, []);

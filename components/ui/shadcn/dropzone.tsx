@@ -4,6 +4,11 @@ import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 
 const acceptedFileType = {
+	all: {
+		'image/*': [],
+		'document/*': [],
+		'text/*': []
+	},
 	image: {
 		'image/*': [
 			'.jpg',
@@ -26,7 +31,7 @@ const acceptedFileType = {
 const default_max_size = 20_971_520; // 20 Mb
 
 export default function Dropzone(props: {
-	only?: 'image' | 'document';
+	only?: 'image' | 'document' | 'all';
 	maxFiles?: number;
 	maxSize?: number;
 	onDrop: (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => void;
@@ -50,7 +55,7 @@ export default function Dropzone(props: {
 	});
 
 	return (
-		<div className="flex flex-col gap-4 w-full">
+		<div className="flex flex-col gap-4 w-fit">
 			<div
 				{...getRootProps()}
 				className="flex flex-col realtive items-center w-full h-[200px] justify-center border-2 border-dashed rounded-lg p-6 transition-colors cursor-pointer"
@@ -70,9 +75,12 @@ export default function Dropzone(props: {
 				)}
 			</div>
 			{
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 w-fit">
 					{acceptedFiles.map((acceptedFile, i) => (
-						<div key={i} className="inline-flex items-center border rounded-xl p-4 space-x-4">
+						<div
+							key={i}
+							className="inline-flex items-center border rounded-xl p-4 space-x-4 w-full text-wrap"
+						>
 							<ImageIcon />
 							<p className="text-muted-foreground">
 								{acceptedFile.name.substring(0, 30)}...
