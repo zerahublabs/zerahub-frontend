@@ -37,7 +37,11 @@ export default function UpdateCollectionAction() {
 				<DialogHeader>
 					<DialogTitle>Update Collection</DialogTitle>
 				</DialogHeader>
-				<form ref={formRef} onSubmit={onSubmitHandler} className="flex flex-col gap-4 w-full">
+				<form
+					ref={formRef}
+					onSubmit={onSubmitHandler}
+					className="flex flex-col gap-4 w-full"
+				>
 					<div className="flex flex-col gap-2">
 						<Label htmlFor="dataset-name" className="text-sm font-semibold">
 							Dataset Name
