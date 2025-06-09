@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
+import { useCollection } from '@/lib/features/collection/hooks';
 import moment from 'moment';
 import React from 'react';
 
@@ -44,6 +45,8 @@ export function OverviewSkeleton() {
 }
 
 export default function Overview() {
+	const { collection } = useCollection();
+
 	return (
 		<>
 			<Card>
@@ -51,12 +54,7 @@ export default function Overview() {
 					<CardTitle>Summary</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className="text-muted-foreground text-sm">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa id
-						consequuntur hic possimus doloribus, nemo, error similique nulla, illum
-						ullam fuga eius tempore eum molestiae earum distinctio? Voluptatem,
-						dignissimos voluptatibus!
-					</p>
+					<p className="text-muted-foreground text-sm">{collection.description}</p>
 				</CardContent>
 			</Card>
 			<Card>
@@ -67,34 +65,29 @@ export default function Overview() {
 					<div className="flex flex-col gap-4">
 						<div className="flex flex-col text-sm gap-1">
 							<small className="text-muted-foreground">Categories</small>{' '}
-							<div className="grid gap-2 grid-cols-6 rounded-2xl divide-x">
-								{[
-									'Wiki',
-									'Science',
-									'History',
-									'Data',
-									'AI',
-									'ML',
-									'NLP',
-									'Open Source',
-								].map((category) => (
-									<Badge
-										key={category}
-										variant={'outline'}
-										className="justify-center flex items-center w-full"
-									>
-										{category}
-									</Badge>
-								))}
-							</div>
+							{collection.categories && collection.categories.length > 0 ? (
+								<div className="grid gap-2 grid-cols-6 rounded-2xl divide-x">
+									{collection.categories.map((category) => (
+										<Badge
+											key={category.id}
+											variant={'outline'}
+											className="justify-center flex items-center w-full"
+										>
+											{category.name}
+										</Badge>
+									))}
+								</div>
+							) : (
+								<span>No categories</span>
+							)}
 						</div>
 						<div className="flex flex-col text-sm gap-1">
 							<small className="text-muted-foreground">Published At </small>
-							{moment(new Date()).format('LLL')}
+							<span>{moment(collection.createdAt).format('LLL')}</span>
 						</div>
 						<div className="flex flex-col text-sm gap-1">
-							<small className="text-muted-foreground">Publisher</small>{' '}
-							<a href="#">0x0000...</a>
+							<small className="text-muted-foreground">Publisher</small>
+							<a href="#">{collection.publisher}</a>
 						</div>
 					</div>
 				</CardContent>
