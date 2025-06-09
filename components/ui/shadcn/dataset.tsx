@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { Card, CardContent, CardTitle } from './card';
 import { AspectRatio } from './aspect-ratio';
 import Image from 'next/image';
@@ -30,7 +30,7 @@ export function DatasetSkeleton() {
 	);
 }
 
-export default function DatasetItem(props: { item: Collection, url: string }) {
+export default function DatasetItem(props: { item: Collection; url: string }) {
 	return (
 		<Link href={props.url}>
 			<Card className="mb-2 py-0 relative overflow-hidden transition-transform duration-300 ease-linear hover:cursor-pointer hover:-translate-y-1">
@@ -39,7 +39,7 @@ export default function DatasetItem(props: { item: Collection, url: string }) {
 						{props.item.cover !== null && (
 							<Image
 								fill
-								src={`/static/${props.item.cover.filename}`}
+								src={`/static/s3/cover/${props.item?.cover.id}`}
 								className="rounded-t-xl"
 								alt="Random Dataset Cover"
 							/>
@@ -51,17 +51,13 @@ export default function DatasetItem(props: { item: Collection, url: string }) {
 						{props.item.title.substring(0, 20)}...
 					</CardTitle>
 					<div className="flex justify-between">
-						{
-							props.item.price == 0 ? (
-								<Badge>
-									Free
-								</Badge>
-							) : (
-								<small className="font-semibold text-sm text-primary">
-									${props.item.price}
-								</small>
-							)
-						}
+						{props.item.price == 0 ? (
+							<Badge>Free</Badge>
+						) : (
+							<small className="font-semibold text-sm text-primary">
+								${props.item.price}
+							</small>
+						)}
 					</div>
 					<div className="inline-flex gap-1">
 						<Badge variant={'outline'}>1 Files</Badge>
