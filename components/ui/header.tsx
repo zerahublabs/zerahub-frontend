@@ -7,7 +7,7 @@ import { SidebarTrigger } from './shadcn/sidebar';
 import dynamic from 'next/dynamic';
 
 const WalletComp = dynamic(() => import('@/components/block/wallet/wallet'), {
-	ssr: false
+	ssr: false,
 });
 
 export function Header() {
