@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/shadcn/separator';
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 import { useCollectionDetails } from '@/hooks/collections/use-collections';
 import { useCollection } from '@/lib/features/collection/hooks';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 
@@ -53,6 +54,7 @@ export function DetailsSkeleton() {
 export default function Details(props: { slug: string }) {
 	useCollectionDetails(props.slug);
 
+	const [isImageLoaded, setIsImageLoaded] = React.useState(false);
 	const { collection } = useCollection();
 
 	return (
@@ -61,12 +63,22 @@ export default function Details(props: { slug: string }) {
 				<div className="flex flex-col gap-6">
 					<div className="overflow-hidden">
 						<AspectRatio ratio={16 / 9}>
+							{!isImageLoaded && (
+								<div className="absolute inset-0 flex items-center justify-center">
+									<Skeleton className="w-full h-full" />
+								</div>
+							)}
 							<Image
 								src={`/static/s3/cover/${collection?.cover.id}`}
 								alt="Gambar"
 								fill
-								className="rounded-xl object-cover"
+								className={cn(
+									'rounded-xl object-cover',
+									isImageLoaded ? 'opacity-100' : 'opacity-0',
+								)}
 								loading="eager"
+								loader={() => `/static/s3/cover/${collection?.cover.id}`}
+								onLoadingComplete={() => setIsImageLoaded(true)}
 							/>
 						</AspectRatio>
 					</div>
