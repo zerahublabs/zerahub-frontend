@@ -1,6 +1,9 @@
 import type { NextConfig } from 'next';
 
-const API_BASE_URL = process.env.NODE_ENV == "production" ? process.env.API_BASE_URL : "https://api-stagging.zerahub.io"
+const API_BASE_URL =
+	process.env.NODE_ENV == 'production'
+		? process.env.API_BASE_URL
+		: 'https://api-stagging.zerahub.io';
 
 const nextConfig: NextConfig = {
 	images: {
@@ -28,8 +31,8 @@ const nextConfig: NextConfig = {
 			},
 			{
 				source: '/static/:path*',
-				destination: `${API_BASE_URL}/static/:path*`
-			}
+				destination: `${API_BASE_URL}/static/:path*`,
+			},
 		];
 	},
 };
